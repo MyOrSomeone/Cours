@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorateur de Biologie Cellulaire | Chapitre 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 
+    Chosen Palette: Warm Neutral (Beige/Amber/Gray)
+    Application Structure Plan: 
+      Structure: A single-page application with a fixed navigation header and three main thematic sections: 1. Fondements (History/Postulates), 2. Structure & Échelle (Components & Scale), 3. Fonctionnement (Membrane Dynamics).
+      Interactions: (1) A clickable "timeline" of buttons for historical discoveries. (2) A dynamic, interactive bar chart (Chart.js) for the "Scale of Life" with highlight buttons. (3) A tabbed interface for "Membrane Components". (4) A tabbed interface for "Membrane Transport". (5) A tabbed interface for "External Agents".
+      Rationale: This thematic structure (History, Structure, Function) is more intuitive for learning and exploration than the original document's linear "Part 1/Part 2" layout. It groups similar concepts, allowing users to explore non-linearly. The interactive elements (tabs, clickable charts) turn passive text (lists, paragraphs) into an engaging experience, reinforcing the information.
+    Visualization & Content Choices: 
+      Info: "Échelle du vivant" data (Organism to Atom, 1m to 70pm). Goal: Compare relative sizes and understand logarithmic scale. Viz/Method: Horizontal Bar Chart (Chart.js, Canvas). Interaction: Buttons ("Organisme", "Cellule", etc.) will update the chart's description panel and highlight the corresponding bar. Justification: A horizontal bar chart handles long labels well and is excellent for comparing disparate magnitudes.
+      Info: Historical discoveries (Hooke, Leeuwenhoek, Virchow, Pasteur). Goal: Present historical context. Viz/Method: Clickable "timeline" buttons (HTML/CSS/JS). Interaction: Clicking a discoverer's name reveals their contribution. Justification: Replaces a long, static text block with an interactive "who's who".
+      Info: Membrane components, transport, & external agents. Goal: Organize detailed sub-topics. Viz/Method: Tabbed content sections (HTML/CSS/JS). Interaction: Clicking tabs ("Protéines", "Virus") switches the visible content. Justification: Standard UI pattern to break down complex topics into manageable chunks.
+    CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            height: 400px;
+            max-height: 50vh;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 500px;
+                max-height: 60vh;
+            }
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link.active,
+        .nav-link:hover {
+            border-bottom-color: #b45309;
+            color: #b45309;
+        }
+        .tab-button.active {
+            background-color: #b45309;
+            color: white;
+            border-color: #b45309;
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'beige-50': '#fdfbf7',
+                        'beige-100': '#f7f3e8',
+                        'amber-700': '#b45309',
+                        'amber-800': '#92400e',
+                        'gray-800': '#1f2937',
+                        'gray-600': '#4b5563',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-beige-50 text-gray-800 antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50 w-full">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <h1 class="text-xl md:text-2xl font-bold text-amber-800">Biologie Chapitre 1</h1>
+                <div class="flex space-x-4 sm:space-x-8">
+                    <a href="#fondements" class="nav-link text-sm sm:text-base font-medium text-gray-600 py-1" data-target="fondements">Fondements</a>
+                    <a href="#structure" class="nav-link text-sm sm:text-base font-medium text-gray-600 py-1" data-target="structure">Structure & Échelle</a>
+                    <a href="#fonctionnement" class="nav-link text-sm sm:text-base font-medium text-gray-600 py-1" data-target="fonctionnement">Fonctionnement</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <section id="fondements" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-amber-800 mb-4">Les Fondements de la Cellule</h2>
+            <p class="text-lg text-gray-600 mb-8 max-w-3xl">
+                Cette section explore les fondements de la biologie moderne : la théorie cellulaire. Découvrez les trois postulats qui définissent la vie et les scientifiques qui ont bâti cette théorie grâce à leurs observations clés.
+            </p>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Les 3 Postulats de la Théorie Cellulaire</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-amber-700 text-white font-bold text-sm mr-4">1</span>
+                        <span class="text-lg">Tous les êtres vivants sont constitués de cellules.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-amber-700 text-white font-bold text-sm mr-4">2</span>
+                        <span class="text-lg">La cellule est la plus petite unité du vivant.</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="flex-shrink-0 flex items-center justify-center h-6 w-6 rounded-full bg-amber-700 text-white font-bold text-sm mr-4">3</span>
+                        <span class="text-lg">Toute cellule provient d’une autre cellule.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="mt-12" id="discoveries-tabs">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Découvertes Clés</h3>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <button class="tab-button active text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="hooke">Robert Hooke (1665)</button>
+                    <button class="tab-button text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="leeuwenhoek">A. van Leeuwenhoek (1673)</button>
+                    <button class="tab-button text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="schwann">Schleiden & Schwann (1839)</button>
+                    <button class="tab-button text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="virchow">Rudolf Virchow (1858)</button>
+                    <button class="tab-button text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="pasteur">Louis Pasteur (1861)</button>
+                </div>
+                <div class="bg-beige-100 rounded-lg p-6 min-h-[150px] transition-all duration-300">
+                    <div id="hooke" class="tab-panel">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Robert Hooke</h4>
+                        <p class="text-gray-700">Observe une coupe de liège avec un microscope (×30). Il voit des espaces vides qu'il nomme <strong class="font-medium">« cellulae »</strong> (cellules), en référence aux cellules de monastère.</p>
+                    </div>
+                    <div id="leeuwenhoek" class="tab-panel hidden">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Anton van Leeuwenhoek</h4>
+                        <p class="text-gray-700">Avec un microscope plus puissant (×300), il observe une goutte d’eau d'étang et y découvre des micro-organismes qu'il nomme <strong class="font-medium">« animalcules »</strong>. Il est aussi le premier à décrire les spermatozoïdes.</p>
+                    </div>
+                    <div id="schwann" class="tab-panel hidden">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Schleiden & Schwann</h4>
+                        <p class="text-gray-700">Respectivement botaniste et physiologiste, ils remarquent que tous les êtres vivants (plantes et animaux) sont constitués de cellules, montrant la présence commune d'une membrane et d'un noyau.</p>
+                    </div>
+                    <div id="virchow" class="tab-panel hidden">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Rudolf Virchow</h4>
+                        <p class="text-gray-700">Ce médecin affirme le postulat clé : <strong class="font-medium">« Toute cellule est formée par la division d’une autre cellule »</strong>, complétant ainsi la théorie cellulaire.</p>
+                    </div>
+                    <div id="pasteur" class="tab-panel hidden">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Louis Pasteur</h4>
+                        <p class="text-gray-700">Démontre expérimentalement (expérience du flacon à col de cygne) que la vie n'apparaît pas spontanément. Il confirme que toute cellule provient d'une cellule préexistante.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-gray-200 my-16">
+
+        <section id="structure" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-amber-800 mb-4">Structure & Échelle du Vivant</h2>
+            <p class="text-lg text-gray-600 mb-8 max-w-3xl">
+                Le vivant est organisé à différentes échelles. Cette section vous permet de visualiser ces ordres de grandeur, de l'organisme entier jusqu'à l'atome, avec un zoom sur le composant essentiel de la cellule : la membrane plasmique.
+            </p>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Explorateur des Échelles</h3>
+                <p class="text-gray-600 mb-6">Cliquez sur un niveau d'organisation pour afficher ses détails et mettre le graphique à jour.</p>
+                
+                <div class="flex flex-wrap gap-2 mb-6" id="scale-buttons">
+                    <button class="scale-button text-sm sm:text-base py-2 px-3 rounded-full border border-gray-300 hover:bg-beige-100" data-label="Organisme">Organisme</button>
+                    <button class="scale-button text-sm sm:text-base py-2 px-3 rounded-full border border-gray-300 hover:bg-beige-100" data-label="Organe">Organe</button>
+                    <button class="scale-button text-sm sm:text-base py-2 px-3 rounded-full border border-gray-300 hover:bg-beige-100" data-label="Cellule">Cellule</button>
+                    <button class="scale-button text-sm sm:text-base py-2 px-3 rounded-full border border-gray-300 hover:bg-beige-100" data-label="Organite">Organite</button>
+                    <button class="scale-button text-sm sm:text-base py-2 px-3 rounded-full border border-gray-300 hover:bg-beige-100" data-label="Membrane">Membrane</button>
+                    <button class="scale-button text-sm sm:text-base py-2 px-3 rounded-full border border-gray-300 hover:bg-beige-100" data-label="Molécule">Molécule</button>
+                    <button class="scale-button text-sm sm:text-base py-2 px-3 rounded-full border border-gray-300 hover:bg-beige-100" data-label="Atome">Atome</button>
+                </div>
+
+                <div class="bg-beige-100 rounded-lg p-4 mb-6 min-h-[60px]">
+                    <p id="scale-description" class="text-lg text-amber-800 font-medium text-center">Sélectionnez un niveau pour voir les détails.</p>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="scaleChart"></canvas>
+                </div>
+            </div>
+
+            <div class="mt-12 bg-white rounded-lg shadow-lg p-6 md:p-8" id="membrane-components-tabs">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-2">Zoom sur la Membrane Plasmique</h3>
+                <p class="text-gray-600 mb-6">La membrane suit un modèle de <strong class="font-medium">"mosaïque fluide"</strong>. Explorez ses composants :</p>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <button class="tab-button active text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="lipides">Bicouche de Phospholipides</button>
+                    <button class="tab-button text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="proteines">Protéines</button>
+                    <button class="tab-button text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="cholesterol">Cholestérol</button>
+                    <button class="tab-button text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="glucides">Glucides</button>
+                </div>
+                <div class="bg-beige-100 rounded-lg p-6 min-h-[150px] transition-all duration-300">
+                    <div id="lipides" class="tab-panel">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Bicouche de Phospholipides</h4>
+                        <p class="text-gray-700">Structure de base de la membrane. Les <strong class="font-medium">têtes hydrophiles</strong> (aiment l'eau) sont orientées vers l'extérieur et l'intérieur de la cellule, tandis que les <strong class="font-medium">queues hydrophobes</strong> (craignent l'eau) sont tournées vers l'intérieur de la membrane.</p>
+                    </div>
+                    <div id="proteines" class="tab-panel hidden">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Protéines Membranaires</h4>
+                        <p class="text-gray-700">Intégrées ou périphériques, elles assurent des fonctions vitales : <strong class="font-medium">transport</strong> de molécules, <strong class="font-medium">communication</strong> (récepteurs) et <strong class="font-medium">reconnaissance</strong> cellulaire.</p>
+                    </div>
+                    <div id="cholesterol" class="tab-panel hidden">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Cholestérol</h4>
+                        <p class="text-gray-700">S'insère entre les phospholipides pour <strong class="font-medium">rigidifier et stabiliser</strong> la membrane, en modulant sa fluidité.</p>
+                    </div>
+                    <div id="glucides" class="tab-panel hidden">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Glucides</h4>
+                        <p class="text-gray-700">Souvent liés aux protéines (glycoprotéines) ou aux lipides (glycolipides) sur la face externe. Ils jouent un rôle crucial dans la <strong class="font-medium">reconnaissance cellulaire</strong> (ex: groupes sanguins).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-gray-200 my-16">
+
+        <section id="fonctionnement" class="mb-16 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-amber-800 mb-4">Fonctionnement & Interactions</h2>
+            <p class="text-lg text-gray-600 mb-8 max-w-3xl">
+                La membrane n'est pas une barrière statique. Elle contrôle activement les échanges et peut être la cible d'agents extérieurs. Explorez ici les mécanismes de transport et l'impact des agents exogènes.
+            </p>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-12" id="transport-tabs">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Transport Membranaire</h3>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <button class="tab-button active text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="glucose">Entrée du Glucose (GLUT4)</button>
+                    <button class="tab-button text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="permeases">Perméases</button>
+                    <button class="tab-button text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="xct">Transporteur xCT</button>
+                </div>
+                <div class="bg-beige-100 rounded-lg p-6 min-h-[150px] transition-all duration-300">
+                    <div id="glucose" class="tab-panel">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Entrée du Glucose (GLUT4)</h4>
+                        <p class="text-gray-700">L'insuline (hormone) favorise la mise en place de <strong class="font-medium">transporteurs GLUT4</strong> dans la membrane des cellules (ex: musculaires). Ces transporteurs permettent une entrée facilitée du glucose dans la cellule, ce qui fait baisser la glycémie (taux de sucre dans le sang).</p>
+                    </div>
+                    <div id="permeases" class="tab-panel hidden">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Perméases</h4>
+                        <p class="text-gray-700">Ce sont des protéines de transport qui permettent le passage de <strong class="font-medium">molécules hydrophiles</strong> (ex: sucres, acides aminés) qui ne pourraient pas traverser la bicouche lipidique hydrophobe par elles-mêmes.</p>
+                    </div>
+                    <div id="xct" class="tab-panel hidden">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Transporteur xCT</h4>
+                        <p class="text-gray-700">C'est un transporteur particulier qui <strong class="font-medium">échange</strong> un acide aminé intracellulaire (la cystine) contre un autre (le glutamate), jouant un rôle spécifique dans l'équilibre de la cellule.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 md:p-8" id="exogenes-tabs">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Impact des Agents Exogènes</h3>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <button class="tab-button active text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="alcool">Alcool</button>
+                    <button class="tab-button text-sm sm:text-base py-2 px-4 rounded-full border border-gray-300" data-target="virus">Virus</button>
+                </div>
+                <div class="bg-beige-100 rounded-lg p-6 min-h-[150px] transition-all duration-300">
+                    <div id="alcool" class="tab-panel">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Alcool</h4>
+                        <p class="text-gray-700">L'alcool <strong class="font-medium">perturbe la fluidité membranaire</strong>. Cela peut modifier la perméabilité de la membrane et affecter le bon fonctionnement des protéines membranaires (transporteurs, récepteurs).</p>
+                    </div>
+                    <div id="virus" class="tab-panel hidden">
+                        <h4 class="text-xl font-semibold text-amber-800 mb-2">Virus</h4>
+                        <p class="text-gray-700">Les virus utilisent la membrane pour pénétrer dans la cellule. Ils peuvent <strong class="font-medium">se fixer à des récepteurs</strong> spécifiques, <strong class="font-medium">fusionner</strong> avec la membrane ou <strong class="font-medium">injecter</strong> leur matériel génétique à travers elle.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-beige-100 border-t border-gray-200 mt-16 py-8">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-600">
+            <p>Application interactive de révision basée sur les documents du Chapitre 1.</p>
+            <p class="text-sm mt-2">Généré pour faciliter l'apprentissage.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            function setupTabs(containerId) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+
+                const buttons = container.querySelectorAll('.tab-button');
+                const panels = container.querySelectorAll('.tab-panel');
+
+                buttons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        buttons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+
+                        const targetId = button.getAttribute('data-target');
+                        
+                        panels.forEach(panel => {
+                            if (panel.id === targetId) {
+                                panel.classList.remove('hidden');
+                            } else {
+                                panel.classList.add('hidden');
+                            }
+                        });
+                    });
+                });
+            }
+
+            setupTabs('discoveries-tabs');
+            setupTabs('membrane-components-tabs');
+            setupTabs('transport-tabs');
+            setupTabs('exogenes-tabs');
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            const scaleData = {
+                labels: ["Organisme", "Organe", "Cellule", "Organite", "Membrane", "Molécule", "Atome"],
+                exponents: [1, -1, -5, -6, -9, -9.5, -11.1],
+                descriptions: {
+                    "Organisme": "Organisme (ex: Plant de maïs) - Taille : 1 m (Ordre : 10¹ m)",
+                    "Organe": "Organe (ex: Feuille de maïs) - Taille : 20 cm (Ordre : 10⁻¹ m)",
+                    "Cellule": "Cellule (ex: Végétale) - Taille : 90-100 µm (Ordre : 10⁻⁵ m)",
+                    "Organite": "Organite (ex: Chloroplaste) - Taille : 5 µm (Ordre : 10⁻⁶ m)",
+                    "Membrane": "Membrane (ex: Plasmique) - Taille : 7 nm (Ordre : 10⁻⁹ m)",
+                    "Molécule": "Molécule (ex: Phosphatidylcholine) - Taille : 3 nm (Ordre : 10⁻⁹ m)",
+                    "Atome": "Atome (ex: Carbone) - Taille : 70 pm (Ordre : 10⁻¹¹ m)"
+                },
+                baseColor: 'rgba(180, 83, 9, 0.6)',
+                highlightColor: 'rgba(180, 83, 9, 1)'
+            };
+
+            const ctx = document.getElementById('scaleChart');
+            if (ctx) {
+                const backgroundColors = scaleData.labels.map(() => scaleData.baseColor);
+
+                const scaleChart = new Chart(ctx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: scaleData.labels,
+                        datasets: [{
+                            label: 'Ordre de grandeur (log10 m)',
+                            data: scaleData.exponents,
+                            backgroundColor: backgroundColors,
+                            borderColor: scaleData.highlightColor,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Ordre de grandeur (m, échelle log 10)'
+                                },
+                                ticks: {
+                                    callback: (value) => `10^${value} m`
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    font: {
+                                        size: 14
+                                    }
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: (context) => `Ordre : ~ 10^${context.raw} m`
+                                }
+                            }
+                        }
+                    }
+                });
+
+                const scaleButtons = document.querySelectorAll('.scale-button');
+                const descriptionPanel = document.getElementById('scale-description');
+
+                scaleButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const label = button.getAttribute('data-label');
+                        descriptionPanel.textContent = scaleData.descriptions[label];
+
+                        const newColors = scaleData.labels.map(l => 
+                            l === label ? scaleData.highlightColor : scaleData.baseColor
+                        );
+                        scaleChart.data.datasets[0].backgroundColor = newColors;
+                        scaleChart.update();
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
