@@ -24,7 +24,7 @@
     🎶 *Música de fondo: SCIENCCLIC*
 
     **#FísicaCuántica #Fotones #Partículas #Ondas #DualidadOndaPartícula #Ciencia #DivulgaciónCientífica #Yann**`,
-            videoSrc: 'https://drive.google.com/uc?export=download&id=1VLyQKJV83SgcnYjJ_0MjiPjeRoMnRGPp',
+            videoSrc: 'espagnolH5.mp4',
             thumbnailSrc: 'espagnolH5.png',
             isPlaylist: false
         },
@@ -48,7 +48,7 @@
     🎶 *Música de fondo: [Nom de la musique ou "Scienclic"]*
 
     **#DobleRendija #FísicaCuántica #Ciencia #DivulgaciónCientífica #MecánicaCuántica #DualidadOndaPartícula #Yann**`,
-            videoSrc: 'espagnol.mp4',
+            videoSrc: 'https://lh3.googleusercontent.com/pw/AP1GczMn6z11YfJFYtSM5872jY5-d4Gt6fG-09rFAyQuoUoiG5Zq0UcEm3VH2YB7E-X7BuUzCzZFfHicFGEvvNil4Sn5hWF1BMphLnh5T8hME22lNetXK1evzEh4hZiQrF95CB9L8k-mQAr1q8bfHb1jZn5nKjP8GPSVuWuJyh2thR-NXi5AkbGKIQc5-RgiP_7WYDz-k1fNwTGbWBoo9WGbgWelc-yt_q-JzFsc6JNEU8ZRT2Bl0HLjIaZtMQQs1XboL0jKsf8-4zr7I4MF04KeM8B5bwk2n9hqYZeyNrnn8gem5ET2VhOmFpAplPIb-TfQDNP4s1gr6yLv5QsZeSQBM7ZuPaIb9SzJqRwLeUrgZfEmSjEvQHEvqeZ1xZwLnz-tXqKe3KMo9xZtel_7hb79EZx1UJmbEfNMeKP_agvgmGqLY2owngFet-CldjfERaDlVoGAi5_YilSXj741uXdw1W36crXlfkcffWejTA5Y1H_qc_stxnhCintuO90WDp4Aa66xj_7G2JyDZ82-DjuADZeWK46bJt649QsnnBRlOqQvFxwzwHIScJyvTQnyvFz95OxnTcubN1UmxRUAd7IulTmbgtoXScDn-8u0E5B89e9YQtIBlmh-WZMAwPJGCe6Cra6hx8lYAXF-9QrwECbywueeNETDOUkFmCr12r4zNN8gAF1ViV2xGEcU7LddhfF20MntRnEL1bHXihfn08DS5amP1OC4tQiCAww93NzM4ffd3sxkM_N1PmNwx2a2BJLG6k-umeHgZJiZDZbF1Z-UDzy--HItuaEvhkAtcXLcbCm3KBafM6cF04nyy_IFEF_cDx703oNhaOh6zfaBMlB4gkaMdg3aObkHDo-UYUuWY7I3_EhxQiNcRqOiBn3NVYtz0XuSlVP2HPWLjBRM_RrI3ixKheD3yNBuSM3uo68wCTlO_cODgIWeXoSM=m15?authuser=1&cpn=Ujk7w5sXv8y2FtWO&c=WEB_EMBEDDED_PLAYER&cver=1.20251104.14.00',
             thumbnailSrc: 'espagnol.png',
             isPlaylist: false
         },
@@ -363,3 +363,4 @@
         // Aucune logique complexe nécessaire, les liens HTML du type <a href="page_video.html?id=1"> suffisent.
 
     }
+
