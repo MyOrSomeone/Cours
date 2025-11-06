@@ -24,7 +24,7 @@
     🎶 *Música de fondo: SCIENCCLIC*
 
     **#FísicaCuántica #Fotones #Partículas #Ondas #DualidadOndaPartícula #Ciencia #DivulgaciónCientífica #Yann**`,
-            videoSrc: 'espagnolH7.mp4',
+            videoSrc: 'https://rr4---sn-4g5ednd7.googlevideo.com/videoplayback?expire=1762460833&ei=gegMafTjEJCFp-oPxrSxgQY&ip=2a01:e0a:3e6:b770:41e0:c377:358:96aa&id=70b9fd879c6df086&itag=15&source=picasa&begin=0&requiressl=yes&xpc=EghoqJzIP3oBAQ==&rms=su,su&sc=yes&susc=ph&app=fife&ic=617&eaua=04ixq_REJRA&pcm2=yes&mime=video/mp4&vprv=1&prv=1&rqh=1&dur=0.000&lmt=1762453619097255&cpn=9JVC_vCe3mFO3oOG&c=WEB_EMBEDDED_PLAYER&cver=1.20251104.14.00&sparams=expire,ei,ip,id,itag,source,requiressl,xpc,susc,app,ic,eaua,pcm2,mime,vprv,prv,rqh,dur,lmt&sig=AJfQdSswRQIgUcjFX2fM-oCwmBsGVTswLUIg-Pe1GDJWTxsTgMgbaCgCIQCcH6oycBpsSKbnIxV3fsdlGC_pJ1Dqrgpg9JvZBtvkZg==&redirect_counter=1&cm2rm=sn-25grs7l&rrc=191&fexp=24350737,24350796,24350816,24350827,24350984,24352157,24354097,24354099&req_id=6972872596b0a3ee&cms_redirect=yes&cmsv=e&met=1762453633,&mh=Ec&mm=34&mn=sn-4g5ednd7&ms=ltu&mt=1762453278&mv=m&mvi=4&pl=46&lsparams=met,mh,mm,mn,ms,mv,mvi,pl,rms,sc&lsig=APaTxxMwRAIgB6WfqhQz4zX9e1RmxVGtDzhoKappQzP0o1XxqIyZB3wCIHKYlB1hCsH49JqwZ6hve6GIMGtJ_fLUyZlsKttNfeFK',
             thumbnailSrc: 'espagnolH5.png',
             isPlaylist: false
         },
@@ -362,3 +362,4 @@
     if (document.title.includes('Accueil')) {
         // Aucune logique complexe nécessaire, les liens HTML du type <a href="page_video.html?id=1"> suffisent.
     }
+
