@@ -24,7 +24,7 @@
     🎶 *Música de fondo: SCIENCCLIC*
 
     **#FísicaCuántica #Fotones #Partículas #Ondas #DualidadOndaPartícula #Ciencia #DivulgaciónCientífica #Yann**`,
-            videoSrc: 'espagnolH5.mp4',
+            videoSrc: 'https://drive.google.com/uc?export=download&id=1VLyQKJV83SgcnYjJ_0MjiPjeRoMnRGPp',
             thumbnailSrc: 'espagnolH5.png',
             isPlaylist: false
         },
@@ -361,4 +361,5 @@
     // Si on est sur la page d'accueil, les liens sont gérés par le HTML standard.
     if (document.title.includes('Accueil')) {
         // Aucune logique complexe nécessaire, les liens HTML du type <a href="page_video.html?id=1"> suffisent.
+
     }
