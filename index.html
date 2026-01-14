@@ -1,236 +1,654 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yutub</title>
-    <link rel="stylesheet" href="espagnol.css">
-    <link rel="icon" type="image/png" href="https://www.youtube.com/s/desktop/c653c3bb/img/favicon_32x32.png">
-
-    
+    <title>Guide Python → JavaScript (Complet)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1f2937; }
+        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+        .code-explanation { border-left: 3px solid #6366f1; padding-left: 1rem; margin-top: 0.5rem; color: #9ca3af; font-size: 0.9rem; }
+    </style>
 </head>
-<body>
-    <header class="header">
-        <div class="left-header">
-            <button class="menu-icon" aria-label="Menu">
-                <span></span>
-            </button>
-            <a href="index.html" class="logo">
-                <span class="icon-placeholder">
-                <svg width="45" height="30" viewBox="0 0 24 24" fill="currentColor"> 
-                    <g>
-                        <path d="M14.4848 20C14.4848 20 23.5695 20 25.8229 19.4C27.0917 19.06 28.0459 18.08 28.3808 16.87C29 14.65 29 9.98 29 9.98C29 9.98 29 5.34 28.3808 3.14C28.0459 1.9 27.0917 0.94 25.8229 0.61C23.5695 0 14.4848 0 14.4848 0C14.4848 0 5.42037 0 3.17711 0.61C1.9286 0.94 0.954148 1.9 0.59888 3.14C0 5.34 0 9.98 0 9.98C0 9.98 0 14.65 0.59888 16.87C0.954148 18.08 1.9286 19.06 3.17711 19.4C5.42037 20 14.4848 20 14.4848 20Z" fill="#FF0033"></path>
-                        <path d="M19 10L11.5 5.75V14.25L19 10Z" fill="white"></path>
-                </svg>
-                </span><span class="text-align">Yutub</span>
-            </a>
-        </div>
-        
-        <div class="search-container">
-            <input type="text" class="search-input" placeholder="Rechercher">
-            <!-- Pour la barre de recherche -->
-            <button class="search-btn" aria-label="Rechercher">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="overflow: visible;">
-                    <path d="M11 2a9 9 0 105.641 16.01.966.966 0 00.152.197l3.5 3.5a1 1 0 101.414-1.414l-3.5-3.5a1 1 0 00-.197-.153A8.96 8.96 0 0020 11a9 9 0 00-9-9Zm0 2a7 7 0 110 14 7 7 0 010-14Z" style="transform:translateY(-3px);"></path>
-                </svg>
-            </button>
-        </div>
-        
-        <div class="right-header">
-            <!-- Pour les icônes de l'en-tête -->
-            <span class="icon-placeholder">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18.707 8.293 12 1.586 5.293 8.293a1 1 0 101.414 1.414L11 5.414V17a1 1 0 002 0V5.414l4.293 4.293a1 1 0 101.414-1.414ZM19 20H5a1 1 0 000 2h14a1 1 0 000-2Z"></path>
-                </svg>
-            </span>
-            <span class="icon-placeholder">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M16 19a4 4 0 11-8 0H4.765C3.21 19 2.25 17.304 3.05 15.97l1.806-3.01A1 1 0 005 12.446V8a7 7 0 0114 0v4.446c0 .181.05.36.142.515l1.807 3.01c.8 1.333-.161 3.029-1.716 3.029H16ZM12 3a5 5 0 00-5 5v4.446a3 3 0 01-.428 1.543L4.765 17h14.468l-1.805-3.01A3 3 0 0117 12.445V8a5 5 0 00-5-5Zm-2 16a2 2 0 104 0h-4Z"></path>
-                </svg>
-            </span>
-        </div>
-    </header>
+<body class="bg-gray-900 text-gray-100 font-sans antialiased selection:bg-indigo-500 selection:text-white">
 
-    <div class="main-content-wrapper">
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-btn" class="lg:hidden fixed top-4 right-4 z-50 bg-indigo-600 p-3 rounded-full shadow-lg">
+        <i class="fas fa-bars"></i>
+    </button>
 
-        <aside class="sidebar">
-            <div class="nav-section">
-                <a href="index.html" class="nav-item active">
-                    <span class="nav-item-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="m11.485 2.143-8 4.8-2 1.2a1 1 0 001.03 1.714L3 9.567V20a2 2 0 002 2h6v-7h2v7h6a2 2 0 002-2V9.567l.485.29a1 1 0 001.03-1.714l-2-1.2-8-4.8a1 1 0 00-1.03 0ZM5 8.366l7-4.2 7 4.2V20h-4v-5.5a1.5 1.5 0 00-1.5-1.5h-3A1.5 1.5 0 009 14.5V20H5V8.366Z"></path>
-                        </svg>
-                    </span>Accueil
-                </a>
-                <a href="index.html?section=subscriptions" class="nav-item">
-                    <span class="nav-item-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M18 1H6a2 2 0 00-2 2h16a2 2 0 00-2-2Zm3 4H3a2 2 0 00-2 2v13a2 2 0 002 2h18a2 2 0 002-2V7a2 2 0 00-2-2ZM3 20V7h18v13H3Zm13-6.5L10 10v7l6-3.5Z"></path>
-                        </svg>
-                    </span>Abonnements
-                </a>
+    <div class="flex min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="w-64 bg-gray-800 border-r border-gray-700 fixed h-full transform -translate-x-full lg:translate-x-0 transition-transform duration-300 z-40 overflow-y-auto">
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-indigo-400 mb-2">Py <i class="fas fa-arrow-right text-sm mx-1"></i> JS</h1>
+                <p class="text-xs text-gray-400">Documentation Complète</p>
             </div>
-
-            <div class="nav-section">
-                <div class="nav-title">You</div>
-               <a href="index.html?section=liked" class="nav-item">
-                    <span class="nav-item-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M8.76 1.487a11 11 0 11-7.54 12.706 1 1 0 011.96-.4 9 9 0 0014.254 5.38A9 9 0 0016.79 4.38 9 9 0 004.518 7H7a1 1 0 010 2H1V3a1 1 0 012 0v2.678a11 11 0 015.76-4.192ZM12 6a1 1 0 00-1 1v5.58l.504.288 3.5 2a1 1 0 10.992-1.736L13 11.42V7a1 1 0 00-1-1Z"></path>
-                        </svg>
-                    </span>History
+            <nav class="mt-2 px-4 space-y-1">
+                <a href="#syntaxe" class="nav-item block px-4 py-2 rounded-lg hover:bg-gray-700 transition text-sm font-medium text-gray-300"><i class="fas fa-code w-6 text-indigo-400"></i> Syntaxe & Math</a>
+                <a href="#arrow" class="nav-item block px-4 py-2 rounded-lg hover:bg-gray-700 transition text-sm font-medium text-gray-300"><i class="fas fa-arrow-right w-6 text-pink-400"></i> Fonctions (=>)</a>
+                <a href="#data" class="nav-item block px-4 py-2 rounded-lg hover:bg-gray-700 transition text-sm font-medium text-gray-300"><i class="fas fa-database w-6 text-purple-400"></i> Objets, JSON, Listes</a>
+                <a href="#storage" class="nav-item block px-4 py-2 rounded-lg hover:bg-gray-700 transition text-sm font-medium text-gray-300"><i class="fas fa-hdd w-6 text-orange-400"></i> Window & Storage</a>
+                <a href="#dom" class="nav-item block px-4 py-2 rounded-lg hover:bg-gray-700 transition text-sm font-medium text-gray-300"><i class="fas fa-layer-group w-6 text-green-400"></i> Le DOM</a>
+                <a href="#events" class="nav-item block px-4 py-2 rounded-lg hover:bg-gray-700 transition text-sm font-medium text-gray-300"><i class="fas fa-bolt w-6 text-yellow-400"></i> Événements (Détail)</a>
+                <a href="#es6" class="block px-4 py-3 rounded-lg hover:bg-gray-700 transition flex items-center gap-3 text-sm font-medium">
+                    <i class="fas fa-wand-magic-sparkles text-purple-400"></i> ES6+ Moderne
                 </a>
-                <a href="#" class="nav-item">
-                    <span class="nav-item-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M16 15.395a.5.5 0 01.762-.426L22.5 18.5l-5.738 3.531a.5.5 0 01-.762-.425v-6.212ZM14 19H4a1 1 0 110-2h10v2Zm6-8a1 1 0 110 2H4a1 1 0 110-2h16Zm0-6a1 1 0 110 2H4a1 1 0 010-2h16Z"></path>
-                        </svg>
-                    </span>Playlists
-                </a>
-                <a href="#" class="nav-item">
-                    <span class="nav-item-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M21 3H3a2 2 0 00-2 2v14a2 2 0 002 2h18a2 2 0 002-2V5a2 2 0 00-2-2ZM3 19V5h18v14H3Zm13-7L9.5 8v8l6.5-4Z"></path>
-                        </svg>
-                    </span>Your videos
-                </a>
-                <a href="#" class="nav-item">
-                    <span class="nav-item-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1Zm0 2a9 9 0 110 18.001A9 9 0 0112 3Zm0 3a1 1 0 00-1 1v5.565l.485.292 3.33 2a1 1 0 001.03-1.714L13 11.435V7a1 1 0 00-1-1Z"></path>
-                        </svg>
-                    </span>Watch later
-                </a>
-                <a href="#" class="nav-item">
-                    <span class="nav-item-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M9.221 1.795a1 1 0 011.109-.656l1.04.173a4 4 0 013.252 4.784L14 9h4.061a3.664 3.664 0 013.576 2.868A3.68 3.68 0 0121 14.85l.02.087A3.815 3.815 0 0120 18.5v.043l-.01.227a2.82 2.82 0 01-.135.663l-.106.282A3.754 3.754 0 0116.295 22h-3.606l-.392-.007a12.002 12.002 0 01-5.223-1.388l-.343-.189-.27-.154a2.005 2.005 0 00-.863-.26l-.13-.004H3.5a1.5 1.5 0 01-1.5-1.5V12.5A1.5 1.5 0 013.5 11h1.79l.157-.013a1 1 0 00.724-.512l.063-.145 2.987-8.535Zm-1.1 9.196A3 3 0 015.29 13H4v4.998h1.468a4 4 0 011.986.528l.27.155.285.157A10 10 0 0012.69 20h3.606c.754 0 1.424-.483 1.663-1.2l.03-.126a.819.819 0 00.012-.131v-.872l.587-.586c.388-.388.577-.927.523-1.465l-.038-.23-.02-.087-.21-.9.55-.744A1.663 1.663 0 0018.061 11H14a2.002 2.002 0 01-1.956-2.418l.623-2.904a2 2 0 00-1.626-2.392l-.21-.035-2.71 7.741Z"></path>
-                        </svg>
-                    </span>Liked videos
-                </a>
-            </div>
-
-            <div class="nav-section">
-                <div class="nav-title">Subscriptions</div>
-                <a href="#" class="nav-item">
-                    <div class="subscription-avatar"></div>
-                    DosMinutos
-                </a>
-                <a href="#" class="nav-item">
-                    <div class="subscription-avatar"></div>
-                    Henidos
-                </a>
-            </div>
-
-            <div class="nav-section">
-                <a href="#" class="nav-item">
-                    <span class="nav-item-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12.844 1h-1.687a2 2 0 00-1.962 1.616 3 3 0 01-3.92 2.263 2 2 0 00-2.38.891l-.842 1.46a2 2 0 00.417 2.507 3 3 0 010 4.525 2 2 0 00-.417 2.507l.843 1.46a2 2 0 002.38.892 3.001 3.001 0 013.918 2.263A2 2 0 0011.157 23h1.686a2 2 0 001.963-1.615 3.002 3.002 0 013.92-2.263 2 2 0 002.38-.892l.842-1.46a2 2 0 00-.418-2.507 3 3 0 010-4.526 2 2 0 00.418-2.508l-.843-1.46a2 2 0 00-2.38-.891 3 3 0 01-3.919-2.263A2 2 0 0012.844 1Zm-1.767 2.347a6 6 0 00.08-.347h1.687a4.98 4.98 0 002.407 3.37 4.98 4.98 0 004.122.4l.843 1.46A4.98 4.98 0 0018.5 12a4.98 4.98 0 001.716 3.77l-.843 1.46a4.98 4.98 0 00-4.123.4A4.979 4.979 0 0012.843 21h-1.686a4.98 4.98 0 00-2.408-3.371 4.999 4.999 0 00-4.12-.399l-.844-1.46A4.979 4.979 0 005.5 12a4.98 4.98 0 00-1.715-3.77l.842-1.459a4.98 4.98 0 004.123-.399 4.981 4.981 0 002.327-3.025ZM16 12a4 4 0 11-7.999 0 4 4 0 018 0Zm-4 2a2 2 0 100-4 2 2 0 000 4Z"></path>
-                        </svg>
-                    </span>Settings
-                </a>
-                <a href="#" class="nav-item">
-                    <span class="nav-item-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="m4 2.999-.146.073A1.55 1.55 0 003 4.454v16.545a1 1 0 102 0v-6.491a7.26 7.26 0 016.248.115l.752.376a8.94 8.94 0 008 0l.145-.073c.524-.262.855-.797.855-1.382V4.458a1.21 1.21 0 00-1.752-1.083 7.26 7.26 0 01-6.496 0L12 2.999a8.94 8.94 0 00-8 0Zm7.105 1.79v-.002l.752.376A9.26 9.26 0 0019 5.641v7.62a6.95 6.95 0 01-6.105-.052l-.752-.376A9.261 9.261 0 005 12.355v-7.62a6.94 6.94 0 016.105.054Z"></path>
-                        </svg>
-                    </span>Report history
-                </a>
-                <a href="#" class="nav-item">
-                    <span class="nav-item-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1Zm0 2a9 9 0 110 18.001A9 9 0 0112 3Zm.5 3h-.483a3.45 3.45 0 00-3.089 1.909l-.323.644a1 1 0 001.79.894l.322-.643a1.46 1.46 0 011.3-.804h.483a1.5 1.5 0 01.153 2.992l-.306.016A1.5 1.5 0 0011 12.5v1a1 1 0 002 0v-.535A3.5 3.5 0 0012.5 6Zm-.5 9.75a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5Z"></path>
-                        </svg>
-                    </span>Help
-                </a>
-                <a href="#" class="nav-item">
-                    <span class="nav-item-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 2H5a4 4 0 00-4 4v10a4 4 0 004 4h2v1.604a1.41 1.41 0 002.095 1.232L14.2 20H19a4 4 0 004-4V6a4 4 0 00-4-4ZM5 4h14a2 2 0 012 2v10a2 2 0 01-2 2h-5.318l-.453.252L9 20.6V18H5a2 2 0 01-2-2V6a2 2 0 012-2Zm7 2a1 1 0 00-1 1v4.5a1 1 0 002 0V7a1 1 0 00-1-1Zm0 7.75a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5Z"></path>
-                        </svg>
-                    </span>Send feedback
-                </a>
-            </div>
+                <a href="#timing" class="nav-item block px-4 py-2 rounded-lg hover:bg-gray-700 transition text-sm font-medium text-gray-300"><i class="fas fa-clock w-6 text-blue-400"></i> Timing (SetTimeout)</a>
+            </nav>
         </aside>
 
-        <div class="content-area">
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-64 p-6 lg:p-12 max-w-5xl mx-auto">
             
-            <div class="filter-bar">
-                <div class="filter-chip active">All</div>
-                <div class="filter-chip">Scientifique</div>
-                <div class="filter-chip">Playlists</div>
-                <div class="filter-chip">Recently uploaded</div>
-                <div class="filter-chip">Watched</div>
-                <div class="filter-chip">New to you</div>
-                <div class="filter-chip">Gaming</div>
-                <div class="filter-chip">Music</div>
+            <div class="mb-12">
+                <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Guide de Transition Détaillé</h1>
+                <p class="text-gray-400">Référence complète pour les concepts JavaScript, du DOM au LocalStorage.</p>
             </div>
+            <!-- 1. SYNTAXE DE BASE -->
+            <section id="syntaxe" class="mb-20 scroll-mt-20">
+                <div class="flex items-center gap-4 mb-8 pb-4 border-b border-gray-700">
+                    <div class="p-3 bg-indigo-500/10 rounded-xl text-indigo-400"><i class="fas fa-code fa-lg"></i></div>
+                    <h2 class="text-3xl font-bold">1. Syntaxe de Base (Ressemble au python)</h2>
+                </div>
 
-            <main class="video-feed">
-                <div class="video-grid">
-                    
-                    <a href="page_video.html?id=1" class="video-card">
-                        <div class="thumbnail" style="background-image: url('espagnolH5.png');">
-                            <div class="placeholder" style="background-image: url('espagnol.png'); background-size: cover; background-position: center; height: 140px;">
-                                El Fotón: ¿Partícula u Onda? (2:00)
-                            </div>
-                            <span class="duration-label">2:00</span>
-                        </div>
-                        <div class="video-details">
-                            <div class="channel-avatar placeholder"></div>
-                            <div class="video-meta">
-                                <h3>El Fotón: ¿Partícula u Onda?</h3>
-                                <p>Henidos <span style="color: #8d8d8d;">
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                                    <path d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1Zm5.707 7.293a1 1 0 010 1.414L10 17.414l-3.707-3.707a1 1 0 111.414-1.414L10 14.586l6.293-6.293a1 1 0 011.414 0Z"></path>
-                                                </svg>
-                                            </span></p>
-                                <p class="views-date">1.9M views<span class="dot-separator">•</span>7 days ago</p>
-                            </div>
-                        </div>
-                    </a>
-                    
-                    <a href="page_video.html?id=playlist" class="video-card">
-                        <div class="thumbnail" style="background-image: url('espagnolH5.png');">
-                            <div class="placeholder" style="background-color: #5d495d;">Science Playlist</div>
-                            <span class="duration-label" style="background-color: rgba(255, 255, 255, 0.9); color: black;">▶ Mix</span>
-                        </div>
-                        <div class="video-details">
-                            <div class="channel-avatar placeholder"></div>
-                            <div class="video-meta">
-                                <h3>Science Playlist</h3>
-                                <p>Henidos & DosMinutos</p>
-                                <p class="views-date">Updated today</p>
-                            </div>
-                        </div>
-                    </a>
-                    
-                    <a href="page_video.html?id=2" class="video-card">
-                        <div class="thumbnail" style="background-image: url('espagnol.png');">
-                            <div class="placeholder" style="background-color: #272727;">¿Por Qué la Observación lo Cambia Todo? (Doble Rendija) (2:00)</div>
-                            <span class="duration-label">2:00</span>
-                        </div>
-                        <div class="video-details">
-                            <div class="channel-avatar placeholder"></div>
-                            <div class="video-meta">
-                                <h3>¿Por Qué la Observación lo Cambia Todo? (Doble Rendija)</h3>
-                                <p>DosMinutos<span style="color: #8d8d8d;">
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                                    <path d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1Zm5.707 7.293a1 1 0 010 1.414L10 17.414l-3.707-3.707a1 1 0 111.414-1.414L10 14.586l6.293-6.293a1 1 0 011.414 0Z"></path>
-                                                </svg>
-                                            </span></p>
-                                <p class="views-date">7M views<span class="dot-separator">•</span>6 day ago</p>
-                            </div>
-                        </div>
-                    </a>
+                <!-- Variables -->
+                <div class="grid md:grid-cols-2 gap-8 mb-10">
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-semibold text-blue-400 mb-4 flex items-center gap-2">
+                            <i class="fab fa-python"></i> Python
+                        </h3>
+                        <pre><code class="language-python"># Déclaration implicite
+nom = "Alice"  # Variable
+PI = 3.14      # Constante (Convention)
 
+# F-String
+print(f"Salut {nom}")
+
+# Listes & Dicos
+lst = [1, 2]
+lst.append(3)
+dico = {"a": 1}</code></pre>
                     </div>
-            </main>
-        </div>
-    </div>
-    
-    <script src="espagnol.js"></script>
+                    <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 relative">
+                        <div class="absolute -top-3 -right-3 bg-yellow-500 text-gray-900 text-xs font-bold px-2 py-1 rounded shadow">JS</div>
+                        <h3 class="text-lg font-semibold text-yellow-400 mb-4 flex items-center gap-2">
+                            <i class="fab fa-js"></i> JavaScript
+                        </h3>
+                        <pre><code class="language-javascript">// Déclaration EXPLICITE
+let nom = "Alice";      // Peut changer
+const PI = 3.14;        // Ne change JAMAIS (Erreur sinon)
 
+// Template Literals (Backticks ` `)
+console.log(`Salut ${nom}`);
+
+// Arrays & Objets
+const lst = [1, 2];
+lst.push(3);            // .append devient .push
+const dico = {a: 1};    // Clés sans guillemets ok</code></pre>
+                    </div>
+                </div>
+            <!-- 1. SYNTAXE, MATH & OPÉRATEURS -->
+            <section id="syntaxe" class="mb-20 scroll-mt-20 border-b border-gray-800 pb-10">
+                <h2 class="text-3xl font-bold mb-6 flex items-center gap-3 text-indigo-400"><i class="fas fa-code"></i>Math & Opérateurs</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Comparateurs & Logique -->
+                    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                        <h3 class="font-bold text-lg mb-4 text-white">Logique & Comparaisons</h3>
+                        <table class="w-full text-sm text-left">
+                            <thead class="text-xs text-gray-500 uppercase bg-gray-700/50">
+                                <tr><th class="p-2">Python</th><th class="p-2">JavaScript</th><th class="p-2">Note</th></tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-700">
+                                <tr><td class="p-2 text-blue-300">and</td><td class="p-2 text-yellow-300">&&</td><td>ET logique</td></tr>
+                                <tr><td class="p-2 text-blue-300">or</td><td class="p-2 text-yellow-300">||</td><td>OU logique</td></tr>
+                                <tr><td class="p-2 text-blue-300">not x</td><td class="p-2 text-yellow-300">!x</td><td>Négation</td></tr>
+                                <tr><td class="p-2 text-blue-300">None</td><td class="p-2 text-yellow-300">null</td><td>Valeur vide</td></tr>
+                                <tr><td class="p-2 text-blue-300">True / False</td><td class="p-2 text-yellow-300">true / false</td><td>Minuscules !</td></tr>
+                                <tr><td class="p-2 text-blue-300">==</td><td class="p-2 text-yellow-300">===</td><td>Toujours utiliser 3 ! (Strict)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Math & String -->
+                    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                        <h3 class="font-bold text-lg mb-4 text-white">Math & Textes</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-xs text-gray-500 font-bold mb-1">MATH (Librairie incluse)</p>
+                                <pre><code class="language-javascript">Math.round(4.7); // 5 (Arrondi)
+Math.floor(4.7); // 4 (Arrondi bas)
+Math.ceil(4.1);  // 5 (Arrondi haut)
+Math.random();   // Entre 0 et 1 (comme random.random())
+// Entier entre 0 et 10 :
+Math.floor(Math.random() * 10);</code></pre>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 font-bold mb-1">CONCATÉNATION vs TEMPLATE</p>
+                                <pre><code class="language-javascript">let nom = "Bob";
+// Concaténation classique (Vieux)
+let a = "Salut " + nom + " !"; 
+
+// Template Literals (Moderne - Backticks ` `)
+// Équivalent du f"Salut {nom}"
+let b = `Salut ${nom} !`; </code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. LES FONCTIONS FLÉCHÉES -->
+            <section id="arrow" class="mb-20 scroll-mt-20 border-b border-gray-800 pb-10">
+                <h2 class="text-3xl font-bold mb-6 flex items-center gap-3 text-pink-400"><i class="fas fa-arrow-right"></i> 2. La Révolution "=>"</h2>
+                
+                <p class="text-gray-300 mb-6">En JS moderne, on utilise les <strong>Arrow Functions</strong> partout. Pourquoi ? C'est plus court et ça gère mieux le contexte (`this`). Voici comment traduire mentalement :</p>
+
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700 space-y-8">
+                    
+                    <!-- Etape 1 -->
+                    <div class="grid md:grid-cols-2 gap-4 items-center">
+                        <div>
+                            <h4 class="font-bold text-gray-400 mb-2">1. Fonction classique (Python style)</h4>
+                            <pre><code class="language-javascript">function somme(a, b) {
+    return a + b;
+}</code></pre>
+                        </div>
+                        <div class="text-sm text-gray-400">
+                            C'est l'ancienne méthode. Verbeuse.
+                        </div>
+                    </div>
+
+                    <!-- Etape 2 -->
+                    <div class="grid md:grid-cols-2 gap-4 items-center">
+                        <div>
+                            <h4 class="font-bold text-pink-400 mb-2">2. Arrow Function (Standard)</h4>
+                            <pre><code class="language-javascript">const somme = (a, b) => {
+    return a + b;
+};</code></pre>
+                        </div>
+                        <div class="text-sm text-gray-400">
+                            On stocke la fonction dans une variable `const`. <br>
+                            Le symbole <code>=></code> remplace le mot clé `function` ou le `:` de Python. <br>
+                            <em>"Prends (a, b) et exécute le bloc {}"</em>.
+                        </div>
+                    </div>
+
+                    <!-- Etape 3 -->
+                    <div class="grid md:grid-cols-2 gap-4 items-center">
+                        <div>
+                            <h4 class="font-bold text-green-400 mb-2">3. Le raccourci ultime (Return implicite)</h4>
+                            <pre><code class="language-javascript">const somme = (a, b) => a + b;</code></pre>
+                        </div>
+                        <div class="text-sm text-gray-400">
+                            Si tu n'as <strong>qu'une seule ligne</strong> qui retourne une valeur :<br>
+                            1. Enlève les accolades `{}`<br>
+                            2. Enlève le mot `return`<br>
+                            La flèche <code>=></code> signifie alors "renvoie ça".
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- 3. DATA, JSON & LISTES -->
+            <section id="data" class="mb-20 scroll-mt-20 border-b border-gray-800 pb-10">
+                <h2 class="text-3xl font-bold mb-6 flex items-center gap-3 text-purple-400"><i class="fas fa-database"></i> 3. Objets, JSON & Listes</h2>
+
+                <!-- Objets & Méthodes -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-200">Objets & Méthodes</h3>
+                    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                        <p class="mb-3 text-sm text-gray-400">En JS, tu peux mettre des fonctions DANS tes objets (dictionnaires).</p>
+                        <pre><code class="language-javascript">const perso = {
+    nom: "Mario",
+    vies: 3,
+    // Une méthode
+    parler: function() {
+        // 'this' fait référence à l'objet lui-même (équivalent self)
+        alert("Je suis " + this.nom);
+    },
+    // Syntaxe raccourcie (plus courante)
+    sauter() {
+        console.log("Hop !");
+    }
+};
+
+perso.parler(); // Déclenche l'alerte</code></pre>
+                    </div>
+                </div>
+
+                <!-- JSON -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold mb-4 text-gray-200">JSON (Conversion String/Objet)</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                            <h4 class="text-purple-300 font-bold mb-2">Objet Vers Texte (Stringify)</h4>
+                            <p class="text-xs text-gray-500 mb-2">Pour envoyer au serveur ou sauvegarder.</p>
+                            <pre><code class="language-javascript">const data = { id: 1, user: "A" };
+const jsonString = JSON.stringify(data);
+
+console.log(jsonString); 
+// '{"id":1,"user":"A"}'</code></pre>
+                        </div>
+                        <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                            <h4 class="text-purple-300 font-bold mb-2">Texte Vers Objet (Parse)</h4>
+                            <p class="text-xs text-gray-500 mb-2">Quand tu reçois une réponse d'API.</p>
+                            <pre><code class="language-javascript">const json = '{"vies": 3}';
+const obj = JSON.parse(json);
+
+console.log(obj.vies); // 3 (Int)</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Splice -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4 text-gray-200">Modifier les listes</h3>
+                    <p class="text-gray-400 mb-2 text-sm">Python a `del` ou slicing `[:]`. JS a `splice` qui est le couteau suisse (couper, ajouter, remplacer).</p>
+                    <p class="text-gray-400 mb-2 text-sm">Il y a aussi push pour simplement ajouter un élément à la fin de la liste (comme un append en pyhton).</p>
+                    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                        <pre><code class="language-javascript">const fruits = ["Pomme", "Banane", "Cerise", "Date"];
+
+// splice(index_départ, combien_supprimer, ...quoi_ajouter)
+
+// 1. SUPPRIMER : À l'index 1, supprime 2 éléments
+fruits.splice(1, 2); 
+// Résultat : ["Pomme", "Date"] ("Banane" et "Cerise" supprimés)
+
+// 2. AJOUTER : À l'index 1, supprime 0, ajoute "Kiwi"
+fruits.splice(1, 0, "Kiwi"); 
+// Résultat : ["Pomme", "Kiwi", "Date"]
+// Sinon avec push : 
+fruits.push("Kiwi");
+// Résultat : ["Pomme", "Kiwi", "Date" ,"Kiwi"]</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. WINDOW & STORAGE -->
+            <section id="storage" class="mb-20 scroll-mt-20 border-b border-gray-800 pb-10">
+                <h2 class="text-3xl font-bold mb-6 flex items-center gap-3 text-orange-400"><i class="fas fa-hdd"></i> 4. Window & LocalStorage</h2>
+
+                <div class="mb-6 bg-blue-900/20 p-4 rounded-lg border border-blue-800">
+                    <h3 class="font-bold text-blue-300 mb-2">La Hiérarchie "Window"</h3>
+                    <p class="text-sm text-gray-300">
+                        En Python, tu as `globals()`. Dans le navigateur, le roi est l'objet <code>window</code>. <br>
+                        Tout lui appartient.
+                    </p>
+                    <ul class="list-disc list-inside mt-2 text-sm text-gray-400 ml-4">
+                        <li><code>window.document</code> : Le HTML (Le DOM).</li>
+                        <li><code>window.innerWidth</code> : Largeur de l'écran.</li>
+                        <li><code>window.localStorage</code> : Petite base de données du navigateur.</li>
+                        <li><code>alert()</code> est en fait <code>window.alert()</code>.</li>
+                    </ul>
+                </div>
+
+                <!-- LocalStorage Demo -->
+                <div class="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden">
+                    <div class="bg-gray-900/50 px-6 py-3 border-b border-gray-700">
+                        <span class="text-sm font-mono text-orange-400">Demo Interactive : LocalStorage</span>
+                    </div>
+                    <div class="p-6 grid md:grid-cols-2 gap-8">
+                        <div>
+                            <p class="text-gray-400 text-sm mb-4">
+                                Le LocalStorage permet de sauvegarder des chaînes de caractères qui restent même si tu fermes la page.
+                            </p>
+                            <label class="block text-xs font-bold text-gray-500 mb-1">TA NOTE</label>
+                            <textarea id="storage-input" class="w-full bg-gray-900 border border-gray-600 rounded p-2 text-white mb-2" placeholder="Écris un truc à sauvegarder..."></textarea>
+                            <div class="flex gap-2">
+                                <button onclick="saveData()" class="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-sm transition">Sauvegarder</button>
+                                <button onclick="loadData()" class="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm transition">Charger</button>
+                                <button onclick="clearData()" class="bg-red-600 hover:bg-red-700 px-3 py-1 rounded text-sm transition">Effacer</button>
+                            </div>
+                        </div>
+                        <div class="bg-black/50 p-4 rounded font-mono text-xs">
+                            <div class="text-gray-500 mb-2">// Code exécuté :</div>
+                            <pre><code class="language-javascript" id="storage-code-display">// Clique sur un bouton...</code></pre>
+                            <div class="mt-4 pt-4 border-t border-gray-700">
+                                <span class="text-gray-500">Valeur actuelle dans le stockage :</span>
+                                <div id="storage-status" class="text-orange-300 mt-1 italic">...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. LE DOM (Rappel rapide) -->
+            <section id="dom" class="mb-20 scroll-mt-20 border-b border-gray-800 pb-10">
+                <h2 class="text-3xl font-bold mb-6 flex items-center gap-3 text-green-400"><i class="fas fa-layer-group"></i> 5. Le DOM (Rappel)</h2>
+                <p class="text-gray-300 mb-4">Juste pour rappel, tout part de <code>document</code>.</p>
+                <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                    <pre><code class="language-javascript">// Sélectionner
+const titre = document.querySelector("h1");     // Le premier h1
+const liste = document.querySelectorAll(".item"); // Liste de tous les items
+
+// Modifier
+titre.textContent = "Nouveau Titre";       // Texte sûr
+titre.innerHTML = "<span>HTML</span>";     // Interprète les balises
+titre.style.color = "red";                 // CSS en JS
+titre.classList.add("ma-classe");          // Ajouter une classe CSS</code></pre>
+                </div>
+            </section>
+            <p class="text-gray-300 mb-6">Le DOM est l'arbre des éléments HTML. En JS, on <strong>sélectionne</strong> un élément, puis on le <strong>modifie</strong>.</p>
+
+                <!-- Interactive Demo DOM -->
+                <div class="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden mb-10">
+                    <div class="bg-gray-900/50 px-6 py-3 border-b border-gray-700 flex justify-between items-center">
+                        <span class="text-sm font-mono text-green-400">Demo Interactive : querySelector & Style</span>
+                    </div>
+                    <div class="p-6 grid md:grid-cols-2 gap-8">
+                        
+                        <!-- The Playground -->
+                        <div class="space-y-4">
+                            <div id="demo-box" class="p-6 bg-gray-700 rounded-lg text-center transition-all duration-300 shadow-lg">
+                                <h4 class="text-xl font-bold mb-2">Je suis un élément HTML</h4>
+                                <p>Cible-moi avec JS !</p>
+                            </div>
+                            
+                            <div class="flex gap-2 justify-center">
+                                <button onclick="demoChangeColor()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-sm transition">Changer Couleur</button>
+                                <button onclick="demoChangeText()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded text-sm transition">Changer Texte</button>
+                                <button onclick="demoToggleClass()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm transition">Toggle Class</button>
+                            </div>
+                        </div>
+
+                        <!-- The Explanation -->
+                        <div class="text-sm space-y-4">
+                            <div>
+                                <p class="text-gray-400 mb-1">1. Sélectionner l'élément</p>
+                                <pre><code class="language-javascript">const box = document.querySelector("#demo-box");</code></pre>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 mb-1">2. Modifier le style (camelCase !)</p>
+                                <pre><code class="language-javascript">box.style.backgroundColor = "tomato";
+box.style.borderRadius = "50%";</code></pre>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 mb-1">3. Modifier le contenu</p>
+                                <pre><code class="language-javascript">box.textContent = "J'ai changé !";
+// .innerHTML pour mettre du HTML (attention sécu)</code></pre>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 mb-1">4. Gérer les classes (Best Practice)</p>
+                                <pre><code class="language-javascript">box.classList.toggle("hidden");
+box.classList.add("active");</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-900/20 border-l-4 border-blue-500 p-4 rounded-r text-sm text-blue-200">
+                    <strong>Astuce :</strong> <code>querySelector</code> sélectionne le <em>premier</em> élément trouvé. Pour en sélectionner plusieurs (ex: tous les boutons), utilise <code>querySelectorAll</code> qui retourne une liste (NodeList) sur laquelle tu peux utiliser <code>.forEach()</code>.
+                </div>
+            </section>
+
+            <!-- 6. ÉVÉNEMENTS (DÉTAILLÉ) -->
+            <section id="events" class="mb-20 scroll-mt-20 border-b border-gray-800 pb-10">
+                <h2 class="text-3xl font-bold mb-6 flex items-center gap-3 text-yellow-400"><i class="fas fa-bolt"></i> 6. Master Class Événements</h2>
+                
+                <p class="text-gray-300 mb-6">L'objet événement `e` (ou `event`) contient TOUT. C'est lui qui te dit quelle touche est pressée ou où est la souris.</p>
+
+                <!-- Key Logger Demo -->
+                <div class="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden mb-8">
+                    <div class="bg-gray-900/50 px-6 py-3 border-b border-gray-700 flex justify-between items-center">
+                        <span class="text-sm font-mono text-yellow-400">Demo : Key Logger (Presse une touche)</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="mb-4">
+                            <input type="text" id="key-input" placeholder="Clique ici et appuie sur une touche..." 
+                            class="w-full bg-gray-900 border border-yellow-600/50 rounded p-4 text-xl text-white text-center focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4 text-center font-mono text-sm">
+                            <div class="bg-gray-700 p-3 rounded">
+                                <div class="text-gray-400 text-xs">e.key</div>
+                                <div id="display-key" class="text-xl text-white font-bold">-</div>
+                                <div class="text-xs text-gray-500">Caractère tapé</div>
+                            </div>
+                            <div class="bg-gray-700 p-3 rounded">
+                                <div class="text-gray-400 text-xs">e.code</div>
+                                <div id="display-code" class="text-xl text-white font-bold">-</div>
+                                <div class="text-xs text-gray-500">Position physique</div>
+                            </div>
+                            <div class="bg-gray-700 p-3 rounded">
+                                <div class="text-gray-400 text-xs">e.type</div>
+                                <div id="display-type" class="text-xl text-white font-bold">-</div>
+                                <div class="text-xs text-gray-500">Type d'event</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-bold text-lg mb-4 text-white">Principaux Événements</h3>
+                        <ul class="space-y-3 text-sm text-gray-300">
+                            <li><code class="text-yellow-300">click</code> : Sur un bouton ou div.</li>
+                            <li><code class="text-yellow-300">submit</code> : Sur un <strong>&lt;form&gt;</strong> (Utiliser preventDefault!).</li>
+                            <li><code class="text-yellow-300">input</code> : Dès qu'un caractère change dans un input.</li>
+                            <li><code class="text-yellow-300">change</code> : Quand on valide (Entrée ou clic ailleurs).</li>
+                            <li><code class="text-yellow-300">keydown</code> : Touche enfoncée (répétition si maintenue).</li>
+                            <li><code class="text-yellow-300">keyup</code> : Touche relâchée.</li>
+                            <li><code class="text-yellow-300">mouseenter</code> / <code class="text-yellow-300">mouseleave</code> : Survol souris.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                        <h3 class="font-bold text-sm mb-2 text-white">Code Type pour Clavier</h3>
+                        <pre><code class="language-javascript">document.addEventListener("keydown", (e) => {
+    // Vérifier la touche
+    if (e.key === "Enter") {
+        console.log("Validation !");
+    }
+    
+    // Combinaison (Ctrl + S)
+    if (e.ctrlKey && e.key === "s") {
+        e.preventDefault(); // Bloque la sauvegarde navigateur
+        console.log("Sauvegarde Custom");
+    }
+});</code></pre>
+                    </div>
+                </div>
+            </section>
+             <!-- 5. ES6 -->
+             <section id="es6" class="mb-20 scroll-mt-20">
+                <div class="flex items-center gap-4 mb-8 pb-4 border-b border-gray-700">
+                    <div class="p-3 bg-purple-500/10 rounded-xl text-purple-400"><i class="fas fa-wand-magic-sparkles fa-lg"></i></div>
+                    <h2 class="text-3xl font-bold">5. Syntaxe Moderne (ES6+)</h2>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                        <h4 class="font-bold text-purple-400 mb-2">Destructuring</h4>
+                        <p class="text-xs text-gray-500 mb-2">Extraire des valeurs d'un objet/liste directement.</p>
+                        <pre><code class="language-javascript">const user = { nom: "Tom", age: 30 };
+
+// Au lieu de : const nom = user.nom;
+const { nom, age } = user;
+
+console.log(nom); // "Tom"</code></pre>
+                    </div>
+
+                    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                        <h4 class="font-bold text-purple-400 mb-2">Spread Operator (...)</h4>
+                        <p class="text-xs text-gray-500 mb-2">Copier ou fusionner des tableaux/objets.</p>
+                        <pre><code class="language-javascript">const fruit = ["Pomme", "Poire"];
+const tout = [...fruit, "Banane"];
+
+// Copie d'objet (très utile en React)
+const userUpdated = { ...user, age: 31 };</code></pre>
+                    </div>
+                    
+                    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                        <h4 class="font-bold text-purple-400 mb-2">Ternaire</h4>
+                        <p class="text-xs text-gray-500 mb-2">If/Else en une ligne.</p>
+                        <pre><code class="language-javascript">const age = 20;
+
+// condition ? siVrai : siFaux
+const statut = age >= 18 ? "Adulte" : "Mineur";</code></pre>
+                    </div>
+
+                    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                        <h4 class="font-bold text-purple-400 mb-2">Méthodes de tableau</h4>
+                        <p class="text-xs text-gray-500 mb-2">Map et Filter (comme en Python).</p>
+                        <pre><code class="language-javascript">const prix = [10, 20, 30];
+
+// map : transforme
+const ttc = prix.map(p => p * 1.2);
+
+// filter : sélectionne
+const chers = prix.filter(p => p > 15);</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. TIMING -->
+            <section id="timing" class="mb-20 scroll-mt-20">
+                <h2 class="text-3xl font-bold mb-6 flex items-center gap-3 text-blue-400"><i class="fas fa-clock"></i> 7. Timing (SetTimeout)</h2>
+                <p class="text-gray-300 mb-6">Pour remplacer `time.sleep()` ou faire des répétitions, JS utilise des fonctions avec callback.</p>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Timeout -->
+                    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                        <h4 class="text-blue-300 font-bold mb-2">setTimeout (Une fois)</h4>
+                        <p class="text-xs text-gray-500 mb-2">Attend X ms puis exécute.</p>
+                        <pre><code class="language-javascript">console.log("Début");
+
+setTimeout(() => {
+    console.log("Coucou après 2s !");
+}, 2000); // 2000ms = 2 secondes
+
+console.log("Fin"); 
+// Attention : "Fin" s'affiche AVANT "Coucou" !</code></pre>
+                    </div>
+
+                    <!-- Interval -->
+                    <div class="bg-gray-800 p-5 rounded-xl border border-gray-700">
+                        <h4 class="text-blue-300 font-bold mb-2">setInterval (Boucle)</h4>
+                        <p class="text-xs text-gray-500 mb-2">Répète toutes les X ms.</p>
+                        <pre><code class="language-javascript">let compteur = 0;
+
+const id = setInterval(() => {
+    compteur++;
+    console.log(compteur);
+
+    if (compteur === 5) {
+        clearInterval(id); // STOP
+    }
+}, 1000);</code></pre>
+                    </div>
+                </div>
+            </section>
+            
+
+        </main>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+         // --- DEMO DOM ---
+        const demoBox = document.getElementById('demo-box');
+
+        function demoChangeColor() {
+            const colors = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            demoBox.style.backgroundColor = randomColor;
+            demoBox.style.color = 'white';
+        }
+
+        function demoChangeText() {
+            const texts = ["Je suis du JS !", "Le DOM est manipulé", "Encore un texte", "C'est magique ✨"];
+            demoBox.textContent = texts[Math.floor(Math.random() * texts.length)];
+        }
+
+        function demoToggleClass() {
+            demoBox.classList.toggle('ring-4');
+            demoBox.classList.toggle('ring-white');
+            demoBox.classList.toggle('scale-105');
+        }
+
+
+        hljs.highlightAll();
+
+        // --- SIDEBAR ---
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const sidebar = document.getElementById('sidebar');
+        let isMenuOpen = false;
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            sidebar.classList.toggle('-translate-x-full', !isMenuOpen);
+        });
+
+        // --- LOCAL STORAGE DEMO ---
+        const storageInput = document.getElementById('storage-input');
+        const storageCodeDisplay = document.getElementById('storage-code-display');
+        const storageStatus = document.getElementById('storage-status');
+
+        function updateStorageStatus() {
+            const val = localStorage.getItem('monMemo');
+            storageStatus.textContent = val ? `"${val}"` : "(Vide ou null)";
+        }
+        // Init status
+        updateStorageStatus();
+
+        function saveData() {
+            const txt = storageInput.value;
+            localStorage.setItem('monMemo', txt);
+            storageCodeDisplay.textContent = `localStorage.setItem('monMemo', "${txt}");`;
+            updateStorageStatus();
+            // Highlight effect
+            hljs.highlightElement(storageCodeDisplay);
+        }
+
+        function loadData() {
+            const txt = localStorage.getItem('monMemo');
+            if(txt) {
+                storageInput.value = txt;
+                storageCodeDisplay.textContent = `const val = localStorage.getItem('monMemo');\n// val vaut "${txt}"`;
+            } else {
+                storageInput.value = "";
+                storageCodeDisplay.textContent = `const val = localStorage.getItem('monMemo');\n// val vaut null`;
+            }
+            hljs.highlightElement(storageCodeDisplay);
+        }
+
+        function clearData() {
+            localStorage.removeItem('monMemo');
+            storageInput.value = "";
+            storageCodeDisplay.textContent = `localStorage.removeItem('monMemo');`;
+            updateStorageStatus();
+            hljs.highlightElement(storageCodeDisplay);
+        }
+
+        // --- KEY LOGGER DEMO ---
+        const keyInput = document.getElementById('key-input');
+        const dKey = document.getElementById('display-key');
+        const dCode = document.getElementById('display-code');
+        const dType = document.getElementById('display-type');
+
+        const updateKeyDisplay = (e) => {
+            dKey.textContent = e.key === " " ? "(Espace)" : e.key;
+            dCode.textContent = e.code;
+            dType.textContent = e.type;
+            
+            // Animation reset
+            dKey.parentElement.classList.remove('bg-gray-600');
+            void dKey.parentElement.offsetWidth; // trigger reflow
+            dKey.parentElement.classList.add('bg-gray-600');
+        };
+
+        keyInput.addEventListener('keydown', updateKeyDisplay);
+        keyInput.addEventListener('keyup', (e) => {
+            dType.textContent = e.type;
+        });
+
+    </script>
 </body>
 </html>
