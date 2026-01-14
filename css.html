@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Complet HTML & CSS</title>
+    <meta name="description" content="Tutoriel interactif sur les bases du HTML et du CSS">
+    
+    <!-- Google Fonts (Exemple de lien police) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --bg-body: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --code-bg: #1e1e1e;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-body);
+            scroll-behavior: smooth;
+        }
+
+        /* --- LAYOUT --- */
+        header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+        }
+
+        nav.sticky-nav {
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            margin-bottom: 4rem;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        /* --- CODE BLOCKS --- */
+        pre {
+            background-color: var(--code-bg);
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary);
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .inline-code {
+            background-color: #f1f5f9;
+            color: #d946ef;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        /* --- VISUAL EXAMPLES --- */
+        .concept-box {
+            background-color: #eff6ff;
+            border: 1px dashed var(--primary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .tree-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .node {
+            border: 2px solid var(--text-muted);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            background: white;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .node::after {
+            content: "↓";
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-muted);
+        }
+        .node:last-child::after { content: none; }
+
+        /* Grid & Flex Demos */
+        .demo-container {
+            border: 2px solid var(--text-main);
+            padding: 10px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            height: 150px;
+        }
+
+        .demo-item {
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 4px;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        /* Flex Utility classes for demo */
+        .flex-row { display: flex; flex-direction: row; gap: 10px; }
+        .flex-center { justify-content: center; align-items: center; }
+        .flex-between { justify-content: space-between; align-items: center; }
+
+        /* Grid Utility classes for demo */
+        .grid-ex { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; height: 100%; }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+
+        /* Syntax Highlighting Colors (Simulated) */
+        .tag { color: #569cd6; }
+        .attr { color: #9cdcfe; }
+        .str { color: #ce9178; }
+        .comment { color: #6a9955; font-style: italic; }
+        .sel { color: #d7ba7d; } /* Selector */
+        .prop { color: #9cdcfe; } /* Property */
+        .val { color: #b5cea8; } /* Value */
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .grid-ex { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Structure & Style</h1>
+        <p>Comprendre le HTML et le CSS : des parents aux enfants, du display à la couleur.</p>
+    </header>
+
+    <nav class="sticky-nav">
+        <a href="#html">Partie 1 : HTML</a>
+        <a href="#css">Partie 2 : CSS</a>
+    </nav>
+
+    <div class="container">
+
+        <!-- PARTIE 1: HTML -->
+        <section id="html">
+            <h2>1. HTML : L'Ossature</h2>
+            <p>Le HTML (HyperText Markup Language) définit le <strong>sens</strong> et la <strong>structure</strong> de votre contenu. Il ne s'occupe pas de l'esthétique.</p>
+
+            <h3>La Notion de Parent et Enfant</h3>
+            <p>Le HTML est un arbre. Une balise imbriquée dans une autre est un <strong>enfant</strong> (child), et celle qui l'entoure est le <strong>parent</strong>. C'est crucial pour l'héritage en CSS.</p>
+            
+            <div class="concept-box">
+                <div class="tree-diagram">
+                    <div class="node">HTML (L'ancêtre de tous)</div>
+                    <div class="node">BODY (Parent)</div>
+                    <div style="display:flex; gap: 20px;">
+                        <div class="node">HEADER (Enfant)</div>
+                        <div class="node">MAIN (Enfant)</div>
+                    </div>
+                </div>
+            </div>
+
+            <pre><code><span class="tag">&lt;div</span> <span class="attr">class</span>=<span class="str">"parent"</span><span class="tag">&gt;</span>
+    <span class="comment">&lt;!-- Ceci est un enfant du div --&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Je suis un paragraphe enfant.<span class="tag">&lt;/p&gt;</span>
+    
+    <span class="comment">&lt;!-- Ceci est un autre enfant (frère du p) --&gt;</span>
+    <span class="tag">&lt;span&gt;</span>Je suis un texte court.<span class="tag">&lt;/span&gt;</span>
+<span class="tag">&lt;/div&gt;</span></code></pre>
+
+            <h3>La Structure de Base</h3>
+            <p>Tout fichier HTML commence par ces deux grandes parties :</p>
+
+            <h4>1. Le HEAD (<span class="inline-code">&lt;head&gt;</span>)</h4>
+            <p>C'est le "cerveau" de la page. Rien de ce qui est ici n'est affiché directement à l'utilisateur, mais c'est essentiel pour le navigateur.</p>
+            <ul>
+                <li><strong>Meta Charset :</strong> Pour gérer les accents (UTF-8).</li>
+                <li><strong>Title :</strong> Le titre dans l'onglet du navigateur.</li>
+                <li><strong>Liens :</strong> Connexions vers le CSS, les polices (fonts) ou les icônes.</li>
+            </ul>
+
+            <pre><code><span class="tag">&lt;head&gt;</span>
+    <span class="comment">&lt;!-- Encodage des caractères (obligatoire) --&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="str">"UTF-8"</span><span class="tag">&gt;</span>
+    
+    <span class="comment">&lt;!-- Titre de l'onglet --&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Ma Super Page<span class="tag">&lt;/title&gt;</span>
+    
+    <span class="comment">&lt;!-- Lier le fichier CSS --&gt;</span>
+    <span class="tag">&lt;link</span> <span class="attr">rel</span>=<span class="str">"stylesheet"</span> <span class="attr">href</span>=<span class="str">"style.css"</span><span class="tag">&gt;</span>
+    
+    <span class="comment">&lt;!-- Lier une police Google --&gt;</span>
+    <span class="tag">&lt;link</span> <span class="attr">href</span>=<span class="str">"..."</span> <span class="attr">rel</span>=<span class="str">"stylesheet"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/head&gt;</span></code></pre>
+
+            <h4>2. Le BODY (<span class="inline-code">&lt;body&gt;</span>)</h4>
+            <p>Le corps représente <strong>toute la page visible</strong>. Tout ce que l'utilisateur voit doit être entre les balises body.</p>
+            
+            <p>On distingue deux types de balises dans le body :</p>
+            
+            <strong>A. Les Conteneurs (Structure)</strong>
+            <ul>
+                <li><span class="inline-code">&lt;header&gt;</span> : En-tête du site (logo, menu).</li>
+                <li><span class="inline-code">&lt;nav&gt;</span> : Liens de navigation.</li>
+                <li><span class="inline-code">&lt;main&gt;</span> : Contenu principal de la page.</li>
+                <li><span class="inline-code">&lt;footer&gt;</span> : Pied de page (copyright, contacts).</li>
+                <li><span class="inline-code">&lt;section&gt;</span> : Pour découper le contenu par thématique.</li>
+                <li><span class="inline-code">&lt;div&gt;</span> : Le conteneur "joker" générique. À utiliser si aucune balise sémantique ne correspond.</li>
+            </ul>
+
+            <strong>B. Le Contenu (Texte & Média)</strong>
+            <ul>
+                <li><span class="inline-code">&lt;h1&gt;</span> à <span class="inline-code">&lt;h6&gt;</span> : Les titres (h1 est le plus important).</li>
+                <li><span class="inline-code">&lt;p&gt;</span> : Les paragraphes de texte.</li>
+                <li><span class="inline-code">&lt;img&gt;</span> : Les images (balise auto-fermante).</li>
+                <li><span class="inline-code">&lt;a&gt;</span> : Les liens hypertextes (Anchor).</li>
+            </ul>
+
+        </section>
+
+        <!-- PARTIE 2: CSS -->
+        <section id="css">
+            <h2>2. CSS : L'Habillage</h2>
+            <p>Le CSS (Cascading Style Sheets) gère l'apparence. Il cible des éléments HTML pour leur appliquer des règles visuelles.</p>
+
+            <h3>Comment cibler les éléments ? (Sélecteurs)</h3>
+            <p>Il y a une hiérarchie de précision pour dire au navigateur "Je veux styliser CET élément" :</p>
+            
+            <ul>
+                <li><strong>La Balise</strong> (Peu précis) : Cible TOUS les éléments de ce type. <br>Ex: <span class="inline-code">p { ... }</span> stylise tous les paragraphes.</li>
+                <li><strong>La Classe</strong> (Le standard) : Cible un groupe d'éléments spécifiques. On utilise un point <span class="inline-code">.</span> <br>Ex: <span class="inline-code">.bouton-bleu { ... }</span>. À privilégier.</li>
+                <li><strong>L'ID</strong> (Très précis) : Cible UN SEUL élément unique. On utilise un dièse <span class="inline-code">#</span>. <br>Ex: <span class="inline-code">#logo-principal { ... }</span>.</li>
+            </ul>
+
+            <pre><code><span class="comment">/* Cible toutes les balises &lt;p&gt; */</span>
+<span class="sel">p</span> {
+    <span class="prop">color</span>: <span class="val">grey</span>;
+}
+
+<span class="comment">/* Cible les éléments avec class="card" (Le plus courant) */</span>
+<span class="sel">.card</span> {
+    <span class="prop">background-color</span>: <span class="val">white</span>;
+    <span class="prop">padding</span>: <span class="val">20px</span>;
+}
+
+<span class="comment">/* Cible l'élément avec id="header-main" */</span>
+<span class="sel">#header-main</span> {
+    <span class="prop">position</span>: <span class="val">fixed</span>;
+}</code></pre>
+
+            <h3>La Mise en Page (Layout)</h3>
+            <p>C'est ici que la magie opère. Oubliez les <span class="inline-code">float</span> d'il y a 10 ans. Aujourd'hui, on utilise deux outils puissants.</p>
+
+            <h4>1. Display: Flex (Flexbox)</h4>
+            <p>Idéal pour les alignements en <strong>une dimension</strong> (une ligne OU une colonne). Parfait pour les menus, centrer des éléments, etc.</p>
+            <div class="concept-box">
+                <p><em>Exemple : display: flex; justify-content: space-between;</em></p>
+                <div class="demo-container flex-between">
+                    <div class="demo-item" style="width: 60px; height: 60px;">1</div>
+                    <div class="demo-item" style="width: 60px; height: 60px;">2</div>
+                    <div class="demo-item" style="width: 60px; height: 60px;">3</div>
+                </div>
+            </div>
+            <pre><code><span class="sel">.menu</span> {
+    <span class="prop">display</span>: <span class="val">flex</span>;           <span class="comment">/* Active le mode Flex */</span>
+    <span class="prop">justify-content</span>: <span class="val">center</span>; <span class="comment">/* Aligne horizontalement */</span>
+    <span class="prop">align-items</span>: <span class="val">center</span>;     <span class="comment">/* Aligne verticalement */</span>
+    <span class="prop">gap</span>: <span class="val">1rem</span>;               <span class="comment">/* Espace entre les enfants */</span>
+}</code></pre>
+
+            <h4>2. Display: Grid</h4>
+            <p>Idéal pour les structures en <strong>deux dimensions</strong> (lignes ET colonnes). Parfait pour les grilles d'images ou la structure globale de la page.</p>
+            <div class="concept-box">
+                <p><em>Exemple : grid-template-columns: repeat(3, 1fr);</em></p>
+                <div class="demo-container grid-ex">
+                    <div class="demo-item">1</div>
+                    <div class="demo-item">2</div>
+                    <div class="demo-item">3</div>
+                    <div class="demo-item">4</div>
+                    <div class="demo-item">5</div>
+                    <div class="demo-item">6</div>
+                </div>
+            </div>
+
+            <h3>Les autres propriétés indispensables</h3>
+            
+            <table style="width:100%; border-collapse: collapse; margin-top: 1rem;">
+                <tr style="background: #f1f5f9; text-align: left;">
+                    <th style="padding: 10px;">Catégorie</th>
+                    <th style="padding: 10px;">Propriétés Clés</th>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;"><strong>Texte</strong></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">
+                        <span class="inline-code">color</span> (couleur du texte)<br>
+                        <span class="inline-code">text-align</span> (center, left, right)<br>
+                        <span class="inline-code">font-family</span> (police)<br>
+                        <span class="inline-code">font-weight</span> (gras, fin)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;"><strong>Couleurs</strong></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">
+                        <span class="inline-code">background-color</span> (fond)<br>
+                        <span class="inline-code">opacity</span> (transparence)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;"><strong>Position</strong></td>
+                    <td style="padding: 10px; border-bottom: 1px solid #e2e8f0;">
+                        <span class="inline-code">position: relative</span> (par rapport à sa place normale)<br>
+                        <span class="inline-code">position: absolute</span> (flotte par rapport au parent)<br>
+                        <span class="inline-code">position: fixed</span> (reste collé à l'écran lors du scroll)
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 10px;"><strong>Espace (Box Model)</strong></td>
+                    <td style="padding: 10px;">
+                        <span class="inline-code">margin</span> (espace extérieur)<br>
+                        <span class="inline-code">padding</span> (espace intérieur)<br>
+                        <span class="inline-code">border</span> (bordure)
+                    </td>
+                </tr>
+            </table>
+
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 - Guide HTML/CSS généré par IA.</p>
+    </footer>
+
+</body>
+</html>
