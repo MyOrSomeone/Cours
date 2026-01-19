@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Html color and js</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <style>
+
+
+    
         :root {
     --bg-dark: oklch(0.9 0.04 142);
     --bg: oklch(0.95 0.03 142);
@@ -43,8 +45,9 @@ main {
     grid-area: auto;
     display: grid;
     gap: 20px;
-    padding: 200px;
+    padding: 20px;
     box-shadow: var(--shadow);
+    justify-content: center;
 }
 .box {
     background-color: var(--bg-light);
@@ -53,6 +56,8 @@ main {
     border-radius: 20px;
     color: var(--text);
     padding: 20px;
+    height: 100%;
+    width: 100%;
 }
 
 button {
@@ -67,8 +72,10 @@ button {
     </style>
     <main>
         <div class="container">
-            <button class="box box1" onclick="window.location.href='css.html';" style="font-size: 60px;">Documentation HTML / CSS</button>
-            <button class="box box2" onclick="window.location.href='js.html';" style="font-size: 60px;">Documentation JS</button>
+            <button class="box box1" onclick="window.location.href='css.html';" style="font-size: 5vw;">Documentation HTML / CSS</button>
+            <button class="box box2" onclick="window.location.href='js.html';" style="font-size: 5vw;">Documentation JS</button>
+            <button class="box box1" onclick="window.location.href='color-slide.html';" style="font-size: 5vw;">Colors</button>
+            <button class="box box2" onclick="window.location.href='https://www.iamsajid.com';" style="font-size: 5vw;">Sajid Website</button>
         </div>
     </main>
 </body>
