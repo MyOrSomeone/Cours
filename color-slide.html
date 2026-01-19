@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OKLCH Engine - Variable Mapping</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --panel-bg: #09090b;
+            --panel-border: #27272a;
+        }
+
+        /* L'aperçu utilise ces variables dynamiques */
+        .preview-container {
+            background-color: var(--bg-dark); /* Ton --bg-dark */
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .bg-card { background-color: var(--bg); border: 1px solid var(--border); } /* Ton --bg */
+        .bg-accent { background-color: var(--accent); color: white; }
+        .bg-secondary { background-color: var(--secondary); color: white; }
+        .text-muted { color: var(--text-muted); }
+        .border-theme { border-color: var(--border); }
+        
+        /* Correction visibilité Primaire/Secondaire */
+        .bg-vibrant-box { 
+            background-color: var(--bg-light); /* Utilisation de la nouvelle var bg-light */
+            border: 1px solid var(--border);
+        }
+
+        input[type="range"] {
+            appearance: none;
+            background: #27272a;
+            height: 4px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            border: 2px solid #000;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 10px; }
+
+        .code-block {
+            background: #000;
+            border: 1px solid #27272a;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Fira Code', monospace;
+            font-size: 11px;
+            color: #a1a1aa;
+            margin-bottom: 12px;
+            position: relative;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .code-label {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            color: #52525b;
+            font-size: 9px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .btn-action {
+            font-size: 9px;
+            font-weight: 900;
+            text-transform: uppercase;
+            padding: 8px 4px;
+            border-radius: 6px;
+            transition: all 0.2s;
+            flex: 1;
+        }
+    </style>
+</head>
+<body class="bg-black text-zinc-100 min-h-screen flex flex-col lg:flex-row overflow-hidden">
+
+    <!-- PANNEAU DE CONTRÔLE -->
+    <aside class="w-full lg:w-[480px] border-r border-zinc-800 flex flex-col overflow-hidden bg-zinc-950">
+        <div class="p-6 border-b border-zinc-800 flex justify-between items-center">
+            <div>
+                <h1 class="text-lg font-bold">OKLCH Theme Engine</h1>
+                <p class="text-zinc-500 text-[10px] uppercase tracking-tighter">Gestionnaire de Variables de Thème</p>
+            </div>
+            <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+        </div>
+
+        <!-- Scrollable Controls -->
+        <div class="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar">
+            
+            <!-- Sliders -->
+            <div class="space-y-4 bg-zinc-900/50 p-4 rounded-xl border border-zinc-800">
+                <div class="space-y-2">
+                    <div class="flex justify-between text-[10px] font-mono text-zinc-400">
+                        <span>Teinte (Hue)</span>
+                        <span id="h-val">250</span>
+                    </div>
+                    <input type="range" id="h-slider" min="0" max="360" value="250" class="w-full">
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-[10px] font-mono text-zinc-400">
+                        <span>Chroma</span>
+                        <span id="c-val">0.05</span>
+                    </div>
+                    <input type="range" id="c-slider" min="0" max="0.3" step="0.001" value="0.05" class="w-full">
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-[10px] font-mono text-zinc-400">
+                        <span>Luminosité</span>
+                        <span id="l-val">30%</span>
+                    </div>
+                    <input type="range" id="l-slider" min="2" max="98" value="30" class="w-full">
+                </div>
+            </div>
+
+            <!-- Actions Groupes -->
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Groupe Root -->
+                <div class="space-y-2">
+                    <span class="text-[9px] font-bold text-zinc-500 uppercase ml-1">Gestion :root</span>
+                    <div class="flex gap-2">
+                        <button onclick="captureTo(':root')" class="btn-action bg-white text-black hover:bg-zinc-200">Capturer</button>
+                        <button onclick="loadFrom(':root')" class="btn-action border border-zinc-700 hover:bg-zinc-800 text-zinc-400">Charger</button>
+                    </div>
+                </div>
+                <!-- Groupe Light -->
+                <div class="space-y-2">
+                    <span class="text-[9px] font-bold text-zinc-500 uppercase ml-1">Gestion .light</span>
+                    <div class="flex gap-2">
+                        <button onclick="captureTo('.light')" class="btn-action bg-white text-black hover:bg-zinc-200">Capturer</button>
+                        <button onclick="loadFrom('.light')" class="btn-action border border-zinc-700 hover:bg-zinc-800 text-zinc-400">Charger</button>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-zinc-800">
+
+            <!-- CSS Code Previews -->
+            <div class="space-y-4">
+                <div class="code-block" id="root-container">
+                    <span class="code-label">:root</span>
+                    <pre id="root-code"></pre>
+                </div>
+
+                <div class="code-block" id="light-container">
+                    <span class="code-label">.light</span>
+                    <pre id="light-code"></pre>
+                </div>
+
+                <div class="code-block border-blue-900/20">
+                    <span class="code-label text-blue-800">.dynamic</span>
+                    <pre id="dynamic-code">
+.dynamic {
+  --h: <span class="dyn-h text-blue-400">142</span>;
+  --c: <span class="dyn-c text-blue-400">0.05</span>;
+  --l: <span class="dyn-l text-blue-400">10%</span>;
+  --bg-dark: oklch(var(--l) var(--c) var(--h));
+  --bg: oklch(calc(var(--l) + 5%) var(--c) var(--h));
+}</pre>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ZONE D'APERÇU -->
+    <main class="flex-1 overflow-y-auto preview-container custom-scrollbar">
+        <div class="max-w-5xl mx-auto p-8 lg:p-12 space-y-10">
+            
+            <!-- Header -->
+            <header class="flex flex-col md:flex-row justify-between items-end gap-6">
+                <div>
+                    <h2 class="text-5xl font-black tracking-tighter">Theming Engine</h2>
+                    <p class="text-muted text-lg opacity-80 mt-2">Architecture hiérarchique : Dark, Card et Light.</p>
+                </div>
+                <div class="flex items-center gap-4 bg-card p-4 rounded-2xl border-theme shadow-2xl">
+                   <div class="text-right">
+                       <div class="text-[10px] font-black uppercase text-accent">Status</div>
+                       <div class="text-xs font-bold">Synchronisé</div>
+                   </div>
+                   <div class="w-10 h-10 rounded-xl bg-accent flex items-center justify-center text-white shadow-lg shadow-accent/40">
+                       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                   </div>
+                </div>
+            </header>
+
+            <!-- Main Dashboard Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                
+                <!-- Stats Card -->
+                <div class="md:col-span-4 bg-card p-8 rounded-[2.5rem] flex flex-col justify-between min-h-[280px] shadow-2xl group border-theme hover:scale-[1.02] transition-transform">
+                    <div class="space-y-2">
+                        <div class="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center text-accent mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-width="2"></path></svg>
+                        </div>
+                        <span class="text-accent text-[10px] font-black uppercase tracking-[0.2em]">Flux de Données</span>
+                        <h3 class="text-5xl font-black tracking-tighter" id="stat-main">94.2%</h3>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="h-1.5 w-full bg-zinc-500/10 rounded-full overflow-hidden">
+                            <div class="bg-accent h-full w-[85%] rounded-full shadow-[0_0_15px_var(--accent)]"></div>
+                        </div>
+                        <p class="text-muted text-[11px] font-bold">Optimisé pour OKLCH <span class="text-accent" id="stat-hue">142°</span></p>
+                    </div>
+                </div>
+
+                <!-- Chat Component -->
+                <div class="md:col-span-8 bg-card rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col border-theme">
+                    <div class="p-6 border-b border-theme flex items-center justify-between bg-zinc-500/5">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-2xl bg-secondary flex items-center justify-center font-black text-white shadow-lg shadow-secondary/20">JS</div>
+                            <div>
+                                <div class="font-black text-sm tracking-tight">Système de Messagerie</div>
+                                <div class="text-[10px] text-accent uppercase font-black tracking-widest flex items-center gap-1">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span> Sécurisé
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 space-y-6 min-h-[200px]">
+                        <div class="flex gap-4">
+                            <div class="bg-vibrant-box p-4 rounded-3xl rounded-tl-none text-sm max-w-[75%] font-medium border-theme">
+                                Voici la variable <code class="text-accent">--bg-light</code> utilisée pour cette bulle.
+                            </div>
+                        </div>
+                        <div class="flex gap-4 flex-row-reverse">
+                            <div class="bg-accent text-white p-4 rounded-3xl rounded-tr-none text-sm max-w-[70%] font-bold shadow-xl shadow-accent/20">
+                                Elle contraste parfaitement avec <code class="opacity-80">--bg-dark</code> !
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-zinc-500/5 mt-auto flex gap-3 border-t border-theme">
+                        <div class="flex-1 bg-vibrant-box border border-theme rounded-2xl px-4 py-3 text-xs font-bold opacity-60 italic">Modeleur de thèmes actif...</div>
+                        <div class="w-10 h-10 rounded-2xl bg-accent flex items-center justify-center text-white shadow-lg shadow-accent/30">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Config Card -->
+                <div class="md:col-span-12 bg-card p-10 rounded-[3rem] border-2 border-accent/20 shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+                    <div class="flex flex-col lg:flex-row gap-12 items-center relative z-10">
+                        <div class="flex-1 space-y-6">
+                            <div class="inline-block px-3 py-1 rounded-full bg-accent/10 border border-accent/20 text-accent text-[10px] font-black uppercase tracking-widest">Architecture</div>
+                            <h4 class="text-4xl font-black tracking-tighter">Nomenclature Expert</h4>
+                            <p class="text-muted leading-relaxed font-medium">Les composants utilisent désormais <code class="text-accent">--bg-dark</code> pour la scène, <code class="text-accent">--bg</code> pour les conteneurs et <code class="text-accent">--bg-light</code> pour les éléments de surface.</p>
+                            <div class="flex gap-4">
+                                <button class="bg-accent px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest text-white shadow-xl shadow-accent/30 hover:scale-105 active:scale-95 transition">Déployer</button>
+                                <button class="border border-theme px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-zinc-500/10 transition">Réinitialiser</button>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 w-full lg:w-auto">
+                            <!-- Primaire Box -->
+                            <div class="bg-vibrant-box p-6 rounded-[2rem] border border-theme text-center space-y-3 min-w-[160px] shadow-lg">
+                                <span class="text-[10px] font-black text-muted uppercase tracking-widest">Primaire</span>
+                                <div class="h-3 w-full bg-accent rounded-full shadow-[0_0_10px_var(--accent)]"></div>
+                                <div class="text-[9px] font-mono opacity-50">#Accent</div>
+                            </div>
+                            <!-- Secondaire Box -->
+                            <div class="bg-vibrant-box p-6 rounded-[2rem] border border-theme text-center space-y-3 min-w-[160px] shadow-lg">
+                                <span class="text-[10px] font-black text-muted uppercase tracking-widest">Secondaire</span>
+                                <div class="h-3 w-full bg-secondary rounded-full shadow-[0_0_10px_var(--secondary)]"></div>
+                                <div class="text-[9px] font-mono opacity-50">#Subtle</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const hSlider = document.getElementById('h-slider');
+        const cSlider = document.getElementById('c-slider');
+        const lSlider = document.getElementById('l-slider');
+        const preview = document.querySelector('.preview-container');
+
+        // Éléments de code
+        const rootPre = document.getElementById('root-code');
+        const lightPre = document.getElementById('light-code');
+        const dynH = document.querySelector('.dyn-h');
+        const dynC = document.querySelector('.dyn-c');
+        const dynL = document.querySelector('.dyn-l');
+
+        // Mémoire des thèmes capturés pour le "chargement"
+        let savedThemes = {
+            ':root': null,
+            '.light': null
+        };
+
+        function update() {
+            const h = parseInt(hSlider.value);
+            const c = parseFloat(cSlider.value);
+            const l = parseInt(lSlider.value);
+
+            document.getElementById('h-val').innerText = h;
+            document.getElementById('c-val').innerText = c.toFixed(3);
+            document.getElementById('l-val').innerText = l + '%';
+            document.getElementById('stat-hue').innerText = h + '°';
+
+            // Zone dynamique UI
+            dynH.innerText = h;
+            dynC.innerText = c.toFixed(3);
+            dynL.innerText = l + '%';
+
+            const currentTheme = calculateColors(h, c, l);
+            applyTheme(currentTheme);
+        }
+
+        function calculateColors(h, c, l) {
+            const isLight = l > 65;
+            const textL = isLight ? 10 : 96;
+            const secondaryH = (h + 160) % 360;
+
+            // Nouvelle logique demandée :
+            // --bg-dark (Fond scène)
+            // --bg (Fond carte)
+            // --bg-light (Fond surface/bulles)
+            
+            return {
+                "h": h,
+                "c": c,
+                "l": l,
+                "bg-dark": `oklch(${l}% ${c} ${h})`,
+                "bg": `oklch(${isLight ? Math.max(0, l - 4) : Math.min(100, l + 5)}% ${c + 0.005} ${h})`,
+                "bg-light": `oklch(${isLight ? Math.max(0, l - 10) : Math.min(100, l + 15)}% ${c + 0.01} ${h})`,
+                "text": `oklch(${textL}% 0.012 ${h})`,
+                "text-muted": `oklch(${isLight ? 40 : 70}% 0.01 ${h})`,
+                "accent": `oklch(65% 0.18 ${h})`,
+                "secondary": `oklch(60% 0.15 ${secondaryH})`,
+                "border": `oklch(${isLight ? Math.max(0, l - 12) : Math.min(100, l + 18)}% ${c + 0.02} ${h})`
+            };
+        }
+
+        function applyTheme(theme) {
+            Object.entries(theme).forEach(([key, value]) => {
+                if(key !== 'h' && key !== 'c' && key !== 'l') {
+                    preview.style.setProperty(`--${key}`, value);
+                }
+            });
+        }
+
+        function formatCSS(selector, theme) {
+            let css = `${selector} {\n`;
+            Object.entries(theme).forEach(([key, value]) => {
+                if(key !== 'h' && key !== 'c' && key !== 'l') {
+                    css += `  --${key}: ${value};\n`;
+                }
+            });
+            css += `}`;
+            return css;
+        }
+
+        function captureTo(selector) {
+            const h = parseInt(hSlider.value);
+            const c = parseFloat(cSlider.value);
+            const l = parseInt(lSlider.value);
+            
+            const theme = calculateColors(h, c, l);
+            savedThemes[selector] = { h, c, l, theme };
+
+            if (selector === ':root') {
+                rootPre.innerText = formatCSS(':root', theme);
+                flashElement(document.getElementById('root-container'));
+            } else {
+                lightPre.innerText = formatCSS('.light', theme);
+                flashElement(document.getElementById('light-container'));
+            }
+        }
+
+        function loadFrom(selector) {
+            const data = savedThemes[selector];
+            if (!data) {
+                // Si rien n'est capturé, on ne fait rien ou on affiche un petit message
+                return;
+            }
+
+            hSlider.value = data.h;
+            cSlider.value = data.c;
+            lSlider.value = data.l;
+            update();
+        }
+
+        function flashElement(el) {
+            el.style.borderColor = 'var(--accent)';
+            setTimeout(() => {
+                el.style.borderColor = '#27272a';
+            }, 500);
+        }
+
+        hSlider.oninput = update;
+        cSlider.oninput = update;
+        lSlider.oninput = update;
+
+        // Init initial
+        update();
+        // Pré-remplissage des codes par défaut
+        captureTo(':root');
+        captureTo('.light');
+    </script>
+</body>
+</html>
