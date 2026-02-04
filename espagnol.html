@@ -4,215 +4,378 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MMDH - Experiencia Digital Interactiva</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.4/framer-motion.umd.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;700&family=Inter:wght@300;400;600&display=swap');
-        
+        /* --- POLICES ET VARIABLES --- */
         :root {
-            --museum-dark: #1a1a1a;
+            --museum-dark: #0f0f0f;
+            --museum-card: #1a1a1a;
             --museum-red: #b91c1c;
+            --museum-red-light: #fca5a5;
+            --text-gray: #9ca3af;
+            --text-light: #e5e7eb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f0f0f;
-            color: #e5e7eb;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--museum-dark);
+            color: var(--text-light);
+            line-height: 1.6;
             scroll-behavior: smooth;
         }
 
-        h1, h2, h3 {
-            font-family: 'Crimson Pro', serif;
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 64px;
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 1000;
         }
 
-        .museum-section {
+        .logo {
+            font-weight: bold;
+            font-size: 1.25rem;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--museum-red);
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            margin-left: 2rem;
+            transition: color 0.3s;
+        }
+        .nav-links2 a {
+            color: var(--text-light);
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            margin-left: 0rem;
+            transition: color 0.3s;
+            transition: all 0.5s ease;
+        }
+        .nav-links2{
+            display: grid;
+
+        }
+        .nav-links2 a:hover {
+            color: var(--museum-red);
+        }
+
+        .nav-links a:hover {
+            color: var(--museum-red);
+        }
+
+        /* --- SECTIONS --- */
+        section {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 4rem 1rem;
+            padding: 4rem 10%;
             border-bottom: 1px solid #262626;
         }
 
+        .hero {
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), 
+                        url('https://manager.mmdh.cl/uploads/exterior_2_de4ff52023.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin-bottom: 1rem;
+            font-family: serif;
+        }
+
+        .slogan {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--text-gray);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-family: serif;
+            text-transform: uppercase;
+        }
+
+        /* --- GRILLES ET CARTES --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            align-items: center;
+        }
+
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            background: var(--museum-card);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, border-color 0.3s;
         }
 
         .glass-card:hover {
             border-color: var(--museum-red);
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .timeline-line {
-            width: 2px;
-            background: linear-gradient(to bottom, transparent, var(--museum-red), transparent);
+            transform: translateY(-5px);
         }
 
         .highlight-text {
-            color: #fca5a5;
-            font-weight: 600;
+            color: var(--museum-red-light);
+            font-weight: bold;
+        }
+
+        /* --- INTERACTIF --- */
+        .audio-player {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: #262626;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .play-btn {
+            width: 32px;
+            height: 32px;
+            background: var(--museum-red);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timeline-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item {
+            cursor: pointer;
+            text-align: center;
+        }
+
+        #pleb-detail {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 2.5rem;
+            border-radius: 2rem;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- IMAGE PLACEHOLDERS --- */
+        .image-box {
+            width: 100%;
+            height: 400px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-style: italic;
+            border-radius: 1rem;
+            position: relative;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 4rem 10%;
+            background: #000;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            nav { padding: 0 1rem; }
+            .nav-links { display: none; }
+            section { padding: 4rem 5%; }
+            .timeline-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Barre de Navigation fixe -->
-    <nav class="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
-        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            <span class="font-bold text-xl tracking-tighter">MMDH <span class="text-red-600">DIGITAL</span></span>
-            <div class="hidden md:flex space-x-8 text-sm uppercase tracking-widest">
-                <a href="#inicio" class="hover:text-red-500 transition">Inicio</a>
-                <a href="#dictadura" class="hover:text-red-500 transition">Dictadura</a>
-                <a href="#plebiscito" class="hover:text-red-500 transition">Plebiscito</a>
-                <a href="#consecuencias" class="hover:text-red-500 transition">Consecuencias</a>
-            </div>
+    <nav>
+        <div class="logo">MMDH <span>DIGITAL</span></div>
+        <div class="nav-links">
+            <a href="#inicio">Inicio</a>
+            <a href="#dictadura">Dictadura</a>
+            <a href="#plebiscito">Plebiscito</a>
+            <a href="#consecuencias">Consecuencias</a>
         </div>
     </nav>
 
-    <!-- Section 1 : Hero / Accueil -->
-    <section id="inicio" class="museum-section items-center text-center relative overflow-hidden">
-        <div class="absolute inset-0 z-0 opacity-30">
-            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
-            <!-- Simulant l'image de la Moneda en fond -->
-            <div class="w-full h-full bg-[url('https://images.unsplash.com/photo-1581007871115-f14bc016e0a4?auto=format&fit=crop&q=80')] bg-cover bg-center"></div>
-        </div>
-        
-        <div class="relative z-10 max-w-4xl px-4">
-            <h1 class="text-6xl md:text-8xl font-bold mb-6">Museo de la Memoria</h1>
-            <p class="text-xl md:text-2xl text-slate-400 italic mb-8 uppercase tracking-widest">"Para que no se repita"</p>
-            <div class="flex justify-center gap-4">
-                <a href="#dictadura" class="bg-red-700 hover:bg-red-600 text-white px-8 py-3 rounded-full transition duration-300">Explorar la historia</a>
-            </div>
-        </div>
+    <section id="inicio" class="hero">
+        <h1>Museo de la Memoria</h1>
+        <p class="slogan">"Para que no se repita"</p>
+        <a href="#dictadura" style="background: var(--museum-red); color: white; padding: 1rem 2rem; border-radius: 2rem; text-decoration: none; font-weight: bold;">Explorar la historia</a>
     </section>
 
-    <!-- Section 2 : El Establecimiento (Dictadura) -->
-    <section id="dictadura" class="museum-section max-w-6xl mx-auto">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
+    <section id="dictadura">
+        <div class="grid">
             <div>
-                <h2 class="text-4xl font-bold mb-6 text-red-600 border-l-4 border-red-600 pl-4 uppercase">El Establecimiento de la Dictadura</h2>
-                <div class="space-y-4 text-lg text-slate-300">
-                    <p>Antes, Chile era una democracia, <span class="highlight-text">mientras que</span> una parte del país vivía tensiones políticas y sociales.</p>
-                    <p>El 11 de septiembre de 1973, Salvador Allende fue derrocado. Augusto Pinochet, el jefe del ejército, estaba <span class="highlight-text">organizando</span> un golpe de Estado cuando **bombardeó** el palacio presidencial de La Moneda.</p>
-                    <p>El presidente se **suicidó** antes del bombardeo, después de dar un discurso a la población. Así, Pinochet **obtuvo** el poder.</p>
-                </div>
+                <h2 style="border-left: 5px solid var(--museum-red); padding-left: 1rem;">La Dictadura</h2>
+                <p>Antes, Chile era una democracia, <span class="highlight-text">mientras que</span> una parte del país vivía tensiones políticas y sociales.</p>
+                <br>
+                <p>El 11 de septiembre de 1973, Salvador Allende fue derrocado. Augusto Pinochet, el jefe del ejército, estaba <span class="highlight-text">organizando</span> un golpe de Estado cuando <strong>bombardeó</strong> el palacio de La Moneda.</p>
+                <br>
+                <p>El presidente se <strong>suicidó</strong> antes del bombardeo. Así, Pinochet <strong>obtuvo</strong> el poder.</p>
                 
-                <!-- Interactif : Simulacre de lecteur audio pour Allende -->
-                <div class="mt-8 p-4 glass-card rounded-xl flex items-center gap-4">
-                    <button class="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center hover:bg-red-500 transition" onclick="alert('Reproduciendo simulacro del discurso...')">
-                        <svg class="w-6 h-6 fill-white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <div class="audio-player">
+                    <button class="play-btn" id="playBtn" onclick="toggleAudio()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
                     </button>
                     <div>
-                        <p class="font-bold text-sm">Último discurso de Allende (Radio Magallanes)</p>
-                        <p class="text-xs text-slate-500">11 de septiembre, 1973</p>
+                        <p style="font-size: 0.9rem; font-weight: bold;">Último discurso de Allende</p>
+                        <p style="font-size: 0.7rem; color: #666;">11 de septiembre, 1973</p>
                     </div>
+                    <audio id="audioPlayer" src="archivosonoro.mp3"></audio>
                 </div>
             </div>
-            <div class="glass-card rounded-2xl overflow-hidden shadow-2xl group">
-                <div class="h-[400px] flex items-center justify-center bg-slate-800 text-slate-500 italic p-8 text-center">
-                    [Image interactive: La Moneda en llamas]
-                    <!-- En production, on mettrait l'image de ton dépliant ici -->
-                </div>
+            <div class="image-box">
+                <svg display="none" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:1rem"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                <img width="100%" height="100%"  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTMbsMvx40PMV49et_chPsl80osPpfA7uu7A&s" alt="Imagen histórica" style="max-width:90%; max-height:90%; object-fit:cover; border-radius:0.5rem;">
             </div>
         </div>
     </section>
 
-    <!-- Section 3 : El Plebiscito (Interactive Timeline) -->
-    <section id="plebiscito" class="museum-section bg-zinc-900/50">
-        <div class="max-w-4xl mx-auto text-center mb-16">
-            <h2 class="text-4xl font-bold mb-6 uppercase">El Plebiscito de 1988</h2>
-            <p class="text-slate-400">Haz clic en los hitos para ver los detalles del fin de la dictadura.</p>
-        </div>
+    <section id="plebiscito" style="background: #141414;">
+        <h2 style="text-align: center;">El Plebiscito de 1988</h2>
+        <p style="text-align: center; color: var(--text-gray); margin-bottom: 3rem;">Haz clic en las fechas para ver los detalles.</p>
 
-        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
-            <div class="glass-card p-6 rounded-2xl text-center cursor-pointer" onclick="updatePlebDetail(0)">
-                <h4 class="text-red-500 font-bold text-2xl mb-2">1988</h4>
-                <p class="text-sm">Pinochet organizó un plebiscito para pasar a la democracia.</p>
+        <div class="timeline-container">
+            <div class="glass-card timeline-item" onclick="updatePleb(0)">
+                <h3 style="color: var(--museum-red); margin-bottom: 0.5rem;">1988</h3>
+                <p style="font-size: 0.8rem;">El referéndum histórico.</p>
             </div>
-            <div class="glass-card p-6 rounded-2xl text-center cursor-pointer" onclick="updatePlebDetail(1)">
-                <h4 class="text-red-500 font-bold text-2xl mb-2">1990 - 1998</h4>
-                <p class="text-sm">Pinochet fue jefe del ejército y estaba <span class="highlight-text">manteniendo</span> influencia.</p>
+            <div class="glass-card timeline-item" onclick="updatePleb(1)">
+                <h3 style="color: var(--museum-red); margin-bottom: 0.5rem;">1990-98</h3>
+                <p style="font-size: 0.8rem;">La transición vigilada.</p>
             </div>
-            <div class="glass-card p-6 rounded-2xl text-center cursor-pointer" onclick="updatePlebDetail(2)">
-                <h4 class="text-red-500 font-bold text-2xl mb-2">2006</h4>
-                <p class="text-sm">Muerte de Pinochet sin ser condenado totalmente.</p>
+            <div class="glass-card timeline-item" onclick="updatePleb(2)">
+                <h3 style="color: var(--museum-red); margin-bottom: 0.5rem;">2006</h3>
+                <p style="font-size: 0.8rem;">El fin de una era.</p>
             </div>
         </div>
 
-        <div id="pleb-detail" class="max-w-4xl mx-auto mt-12 p-8 border border-white/5 rounded-3xl bg-black/40 text-center">
-            <p class="italic text-slate-400">Selecciona una fecha arriba para leer más.</p>
+        <div id="pleb-detail">
+            <p style="color: #666;">Selecciona una fecha arriba para leer el contenido del museo.</p>
         </div>
     </section>
 
-    <!-- Section 4 : Consecuencias y Arpilleras -->
-    <section id="consecuencias" class="museum-section max-w-6xl mx-auto">
-        <h2 class="text-4xl font-bold mb-12 text-center uppercase">Consecuencias y Memoria</h2>
-        
-        <div class="grid md:grid-cols-2 gap-16">
-            <div class="space-y-6">
-                <p class="text-lg">Hoy en día, el golpe de Estado de 1973 sigue teniendo consecuencias importantes en Chile.</p>
-                <div class="p-6 bg-red-950/20 border-l-4 border-red-600 rounded-r-xl">
-                    <p class="mb-4 italic">"Muchas familias están <span class="highlight-text">buscando</span> a los desaparecidos, <span class="highlight-text">mientras que</span> otras están <span class="highlight-text">luchando</span> por la justicia y la memoria."</p>
-                </div>
-                <p class="text-slate-400">La sociedad chilena sigue dividida y el pasado está <span class="highlight-text">influyendo</span> en la política actual.</p>
+    <section id="consecuencias">
+        <h2 style="text-align: center;">Consecuencias y Memoria</h2>
+        <div class="grid">
+            <div class="glass-card">
+                <p style="font-size: 1.1rem; border-left: 3px solid var(--museum-red); padding-left: 1rem; font-style: italic;">
+                    "Muchas familias están <span class="highlight-text">buscando</span> a los desaparecidos, <span class="highlight-text">mientras que</span> otras están <span class="highlight-text">luchando</span> por la justicia y la memoria."
+                </p>
+                <br>
+                <p>La sociedad chilena sigue dividida y el pasado está <span class="highlight-text">influyendo</span> en la política actual.</p>
             </div>
-
-            <div class="flex flex-col items-center">
-                <div class="w-full h-80 glass-card rounded-2xl overflow-hidden flex items-center justify-center p-4">
-                    <!-- Simulacre d'image d'Arpillera -->
-                    <div class="w-full h-full border-4 border-dashed border-slate-700 rounded-lg flex flex-col items-center justify-center text-slate-600 italic">
-                        [Image interactive: Arpillera]
-                        <p class="text-[10px] mt-2 not-italic text-red-900 uppercase font-bold">Resistencia Textil</p>
-                    </div>
-                </div>
-                <p class="mt-4 text-sm text-center italic text-slate-500">Las manifestaciones muestran que la memoria histórica sigue siendo un tema central en el país.</p>
+            <div class="image-box" style="height: 300px; border: 2px solid #333;">
+                <span style="  display:none; color: var(--museum-red); font-weight: bold; margin-bottom: 0.5rem;">SALA DE ARPILLERAS</span>
+                <img width="100%" height="100%"  src="https://clio-texte.clionautes.org/wp-content/uploads/cliotexte/2023/08/arpillera-1979.jpg" alt="Imagen histórica" style="max-width:90%; max-height:90%; object-fit:cover; border-radius:0.5rem;">
             </div>
         </div>
     </section>
 
-    <!-- Pied de page -->
-    <footer class="bg-black py-12 border-t border-white/5">
-        <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8">
-            <div>
-                <h4 class="font-bold mb-4">Vocabulario Clave</h4>
-                <ul class="text-xs text-slate-500 space-y-1">
-                    <li>El Desaparecido</li>
-                    <li>El Plebiscito</li>
-                    <li>La Arpillera</li>
-                    <li>La Memoria Histórica</li>
-                </ul>
-            </div>
-            <div class="text-center">
-                <p class="text-sm font-bold">PROYECTO ESCOLAR 1ère</p>
-                <p class="text-xs text-slate-600 mt-2">Anselme, Yann, Héni, Soren</p>
-            </div>
-            <div class="text-right">
-                <p class="text-xs text-slate-500 italic">"Un pueblo sin memoria es un pueblo sin futuro."</p>
-            </div>
+    <footer>
+        <div>
+            <p style="font-weight: bold; color: white; margin-bottom: 1rem;">Resumen</p>
+        <div class="nav-links2">
+            <a href="#inicio">Inicio</a>
+            <a href="#dictadura">Dictadura</a>
+            <a href="#plebiscito">Plebiscito</a>
+            <a href="#consecuencias">Consecuencias</a>
+        </div>
+        </div>
+        <div style="text-align: center;">
+            <p style="font-weight: bold; color: white;">PROYECTO 1ère</p>
+            <p>Lounas Héni, Anselme Yann et Alarousse Soren</p>
+            <p style="margin-top: 1rem;">© 2026 Museo Digital</p>
+        </div>
+        <div style="text-align: right;">
+            <p style="font-style: italic;">"La memoria es el centinela de la democracia."</p>
         </div>
     </footer>
 
     <script>
-        const plebData = [
-            "El pueblo votó en favor de la democracia, mientras que Pinochet esperaba conservar el poder. El dictador tuvo que organizar elecciones democráticas.",
-            "Fue jefe desde 1990 hasta 1998, y luego fue nombrado senador vitalicio. Sin embargo, Pinochet se nombró jefe del ejército y estaba manteniendo una gran influencia política.",
-            "Fue detenido por sus acciones en 1998 y fue liberado en 2000 por razones de salud. Murió en 2006, dejando un país marcado por la historia."
+        const texts = [
+            "En 1988, Pinochet <strong>organizó</strong> un plebiscito. El pueblo <strong>votó</strong> en favor de la democracia, mientras que Pinochet esperaba conservar el poder.",
+            "Pinochet se <strong>nombró</strong> jefe del ejército y estaba <span class='highlight-text'>manteniendo</span> una gran influencia política hasta 1998.",
+            "Fue detenido en Londres en 1998. Finalmente, <strong>murió</strong> en 2006 sin ser juzgado por todos sus crímenes."
         ];
 
-        function updatePlebDetail(index) {
-            const detailBox = document.getElementById('pleb-detail');
-            detailBox.innerHTML = `
-                <div class="animate-fade-in">
-                    <p class="text-xl leading-relaxed text-white">${plebData[index]}</p>
-                </div>
-            `;
-            detailBox.classList.add('bg-zinc-800');
-            setTimeout(() => detailBox.classList.remove('bg-zinc-800'), 300);
+        function updatePleb(i) {
+            const detail = document.getElementById('pleb-detail');
+            detail.style.opacity = 0;
+            setTimeout(() => {
+                detail.innerHTML = `<p style="font-size: 1.25rem; text-align: center;">${texts[i]}</p>`;
+                detail.style.opacity = 1;
+            }, 200);
         }
-    </script>
 
+        function toggleAudio() {
+            const audio = document.getElementById('audioPlayer');
+            const btn = document.getElementById('playBtn');
+            
+            if (audio.paused) {
+                audio.play();
+                btn.style.background = 'var(--museum-red-light)';
+            } else {
+                audio.pause();
+                btn.style.background = 'var(--museum-red)';
+            }
+        }
+
+        // Rétablir la couleur du bouton quand l'audio se termine
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('audioPlayer');
+            audio.addEventListener('ended', function() {
+                document.getElementById('playBtn').style.background = 'var(--museum-red)';
+            });
+        });
+    </script>
 </body>
 </html>
